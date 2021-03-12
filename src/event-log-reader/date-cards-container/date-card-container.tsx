@@ -1,12 +1,15 @@
 import React, {Component} from "react";
 import { EventReader } from "../controller/event-reader";
+import EventsHeaderMenu from "../header-menu/EventsHeaderMenu";
+import '../Events.css'
 
 interface IDateCardsContainerProps {
 
 }
 
 interface IDateCardsContainerState {
-  cards: Array<string>
+  cards: Array<string>;
+  filterEnable: boolean;
 }
 
 type TGetDates = Array<string> | Error;
@@ -16,7 +19,8 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
   constructor(props: IDateCardsContainerProps) {
     super(props);
     this.state = {
-      cards:[]
+      cards:[],
+      filterEnable: false
     }
   }
 
@@ -31,15 +35,33 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
     console.log(this.count++)
   }
 
+  private handlerToolMenu(name: string, status: boolean){
+    /*const handlers: {[handlerName: string]: any} = {
+      'Search' : this.tougleFilter.bind(this),
+      'default'   : ()=>{console.log(`${name} not found`)}
+    }
+    return (handlers[name] || handlers['default'])(status)
+    */
+  }
+
   render(){
     const items = this.state.cards.map((item: string, index: number) => {
-      return `${index} : ${item}`
+      return (<li>{`${index} : ${item}`}</li>)
     })
+
     return (
-      <div>
-        <p> DateCardsContainer </p>
-        <button onClick = {()=> this.getDates()}>Get Dates</button>
-        <ul>{items}</ul>
+      <div className='flex-column'>
+        <EventsHeaderMenu
+            ToolMenuHandler = {this.handlerToolMenu.bind(this)}
+            isTougle = {this.state.filterEnable}
+          />
+          <div className='flex-all-client b1pxdgr'>
+            <p> DateCardsContainer </p>
+            <button onClick = {()=> this.getDates()}>Get Dates</button>
+            <div>
+              <ul>{items}</ul>
+            </div>
+          </div>
       </div>
     )
   }
