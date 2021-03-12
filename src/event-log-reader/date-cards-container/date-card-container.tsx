@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { EventReader } from "../controller/event-reader";
 import EventsHeaderMenu from "../header-menu/EventsHeaderMenu";
 import '../Events.css'
+import EventCard from "../event-card/EventCard";
 
 interface IDateCardsContainerProps {
 
@@ -35,6 +36,10 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
     console.log(this.count++)
   }
 
+  /*TODO после загрузки дат карточек, запустить процесс чтения данных
+  для этих карточек, и вывести скокот каких событий случалось в карточке,
+  (тип события):(кол-во событий этого типа)*/
+
   private handlerToolMenu(name: string, status: boolean){
     /*const handlers: {[handlerName: string]: any} = {
       'Search' : this.tougleFilter.bind(this),
@@ -46,7 +51,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
 
   render(){
     const items = this.state.cards.map((item: string, index: number) => {
-      return (<li>{`${index} : ${item}`}</li>)
+      return (<EventCard date={item} />)
     })
 
     return (
