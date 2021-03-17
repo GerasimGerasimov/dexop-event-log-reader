@@ -9,8 +9,6 @@ export class TEventReader {
   }
 
   public async getDates(): Promise<Array<string>  | Error > {
-    //const res: Array<string> = []
-    //return res;
       try {
         const header: any = {
             method: 'GET',
@@ -23,14 +21,26 @@ export class TEventReader {
             .then (this.handledHTTPResponse)
             .then (this.validationJSON);
       } catch(e) {
-        //console.log(e);
         throw new Error (`Fetch Error: ${e.message}`);
       }
   }
 
-  public async getDateEvents(date: string): Promise<Array<string | Error >> {
-    const res: Array<string> = []
-    return res;
+  public async getDateEvents(date: string): Promise<Array<string> | Error > {
+    const url: string = `${event_log_reader_events}${date}`;
+    try {
+      const header: any = {
+          method: 'GET',
+          cache: 'no-cache',
+          headers: {
+              'Content-Type':'application/json; charset=utf-8',
+          }
+      }
+      return await fetch(url, header)
+          .then (this.handledHTTPResponse)
+          .then (this.validationJSON);
+    } catch(e) {
+      throw new Error (`Fetch Error: ${e.message}`);
+    }
   }
 
   private handledHTTPResponse (response: any) {
