@@ -8,4 +8,4 @@ export interface TEventItem {
   utime:number;     //1613621197902
 }
 
-export type TEventItems = Array<TEventItem> | Error;
+export type TEventItems = Array<TEventItem>;

@@ -51,7 +51,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
 
   render(){
     const items = this.state.cards.map((item: string, index: number) => {
-      return (<EventCard date={item} />)
+      return (<EventCard date={item}/>)
     })
 
     return (
@@ -64,7 +64,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
             <p> DateCardsContainer </p>
             <button onClick = {()=> this.getDates()}>Get Dates</button>
             <div>
-              <ul>{items}</ul>
+              <ul className='float-left'>{items}</ul>
             </div>
           </div>
       </div>
