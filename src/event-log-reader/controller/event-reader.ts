@@ -1,3 +1,5 @@
+import { TEventItems } from "../types/events";
+
 const event_log_reader = 'http://localhost:5008/';
 const event_log_reader_dates = `${event_log_reader}v1/dates/`;
 const event_log_reader_events = `${event_log_reader}v1/events/`;
@@ -25,7 +27,7 @@ export class TEventReader {
       }
   }
 
-  public async getDateEvents(date: string): Promise<Array<string> | Error > {
+  public async getDateEvents(date: string): Promise<TEventItems> {
     const url: string = `${event_log_reader_events}${date}`;
     try {
       const header: any = {

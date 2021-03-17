@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { EventReader } from '../controller/event-reader';
+import { TEventItem, TEventItems } from '../types/events';
 
 interface IEventCardProps {
   date: string
@@ -20,12 +21,19 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
     }
   }
 
+  private getEventTypesCount(events: Array<TEventItem>){
+
+  }
+
   private async getEvents() {
     try {
-      const events:any = await EventReader.getDateEvents(this.props.date);
+      const events:TEventItems = await EventReader.getDateEvents(this.props.date);
       this.setState({events})
+      //TODO получил массив объектов, теперь надо проверить их type (info/alarm/warning ...)
+      // и сделать счётчики на каждый тип, а потом их значения и вывести
       console.log(events);
     } catch (e) {
+      this.setState({events:{}})
       console.log(e)
     }
     console.log(this.count++)
