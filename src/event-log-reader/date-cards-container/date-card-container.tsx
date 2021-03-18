@@ -64,7 +64,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
             <p> DateCardsContainer </p>
             <button onClick = {()=> this.getDates()}>Get Dates</button>
             <div>
-              <ul className='float-left'>{items}</ul>
+              <ul className="list-group">{items}</ul>
             </div>
           </div>
       </div>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { EventReader } from '../controller/event-reader';
 import { TEventItem, TEventItems } from '../types/events';
+import { EventsCounter } from './EventsCounters';
 
 interface IEventCardProps {
   date: string
@@ -53,18 +54,12 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
     this.getEvents();
   }
 
-  private getInfo(): string {
-    const res: any = Array.from(this.state.events).reduce((a,b)=>{
-      console.log('a:b',b[0], b[1])
-      return a+(` ${b[0]}: ${b[1]} `)
-    },'')
-    console.log(res)
-    return res;
-  }
-
   render() {
     return (
-        <li>{this.props.date}{this.getInfo()}</li>
+      <li className = "list-group-item d-flex justify-content-between align-items-center m-1 shadow-sm">
+        {this.props.date}
+        <EventsCounter events = {this.state.events} />
+      </li>
     )
   }
 }
