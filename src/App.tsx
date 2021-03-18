@@ -5,7 +5,7 @@ import DateCardsContainer from './event-log-reader/date-cards-container/date-car
 function App() {
   return (
     <div className="App">
-      <DateCardsContainer></DateCardsContainer>
+      <DateCardsContainer/>
     </div>
   );
 }

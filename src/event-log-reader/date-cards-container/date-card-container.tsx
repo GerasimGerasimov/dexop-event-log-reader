@@ -49,9 +49,13 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
     */
   }
 
+  private handlerCardClick() {
+    /*TODO при клике на карточку, открыть таблицу с событиями */
+  }
+
   render(){
     const items = this.state.cards.map((item: string, index: number) => {
-      return (<EventCard date={item}/>)
+      return (<EventCard date={item} key={item}/>)
     })
 
     return (
@@ -60,10 +64,10 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
             ToolMenuHandler = {this.handlerToolMenu.bind(this)}
             isTougle = {this.state.filterEnable}
           />
-          <div className='flex-all-client b1pxdgr'>
+          <div className='flex-all-client'>
             <p> DateCardsContainer </p>
             <button onClick = {()=> this.getDates()}>Get Dates</button>
-            <div>
+            <div className="overflow-scroll h-100 b1dg">
               <ul className="list-group">{items}</ul>
             </div>
           </div>
@@ -71,3 +75,15 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
     )
   }
 }
+
+/**TODO
+ * Виртуальный скролл больших таблиц на React
+ * https://www.youtube.com/watch?v=D7EphjNEDI4
+ * 
+ * Динамическая пагинация на React JS. Подгрузка при скролле страницы React JS
+ * https://www.youtube.com/watch?v=J2MWOhV8T6o
+ * 
+ * исп. готовые компоненты:
+ * React.JS: создание огромных списков
+ * https://www.youtube.com/watch?v=wIOygRAoAdA
+ */

@@ -56,7 +56,7 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
 
   render() {
     return (
-      <li className = "list-group-item d-flex justify-content-between align-items-center m-1 shadow-sm">
+      <li className = "list-group-item list-group-item-action d-flex justify-content-between align-items-center m-1 shadow-sm">
         {this.props.date}
         <EventsCounter events = {this.state.events} />
       </li>
