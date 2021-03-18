@@ -29,16 +29,16 @@ export class EventsCounter extends Component<IEventsCountersProps, IEventsCounte
   private getIconElement(event_type: string): JSX.Element {
     const {color, icon} = {... this.getIconStyle(event_type)}
     return (
-      <span className="" style={{ color }}>{icon}</span>
+      <span className="font-weight-bold h6" style={{ color }}>{icon}</span>
     )
   }
   
   render () {
     const items = Array.from(this.props.events).map((item) => {
       return (
-        <div className='d-inline badge badge-pill badge-primary'>
+        <div className='d-inline badge badge-pill badge-primary mr-1'>
           {this.getIconElement(item[0])}
-          <span className="badge badge-primary badge-pill">{item[1]}</span>
+          <span className="pl-1">{item[1]}</span>
         </div>
       )
     })
@@ -48,9 +48,3 @@ export class EventsCounter extends Component<IEventsCountersProps, IEventsCounte
     )
   }
 }
-
-/*
-    if (mode === IEventSortMode.Alarm)   { return '⬥'}; "red" 
-    if (mode === IEventSortMode.Warning) { return '∎'}; "#ffba00"
-    if (mode === IEventSortMode.Info)    { return '▲'}; "#8000C0"
-*/
