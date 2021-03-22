@@ -67,7 +67,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
           <div className='flex-all-client'>
             <p> DateCardsContainer </p>
             <button onClick = {()=> this.getDates()}>Get Dates</button>
-            <div className="overflow-scroll h-100 b1dg">
+            <div className="overflow-auto h-100 b1dg">
               <ul className="list-group">{items}</ul>
             </div>
           </div>
