@@ -20,7 +20,7 @@ export class EventsCounter extends Component<IEventsCountersProps, IEventsCounte
       [EEventTypes.ALARM]: {color:'red', icon:'⬥'},
       [EEventTypes.WARNING]: {color:'#ffba00', icon:'∎'},
       [EEventTypes.INFO]: {color:'#8000C0', icon:'▲'},
-      'defaulf': ()=>{
+      'default': ()=>{
         console.log(`${event_type} not found`);
         return {color:'gray', icon:'?'};
       }
