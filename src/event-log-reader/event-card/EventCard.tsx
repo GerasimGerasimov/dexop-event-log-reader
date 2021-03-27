@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { EventReader } from '../controller/event-reader';
-import { TEventItem, TEventItems } from '../types/events';
+import { TEventItems } from '../types/events';
 import { sortMapKeyByOrder } from './event-card-helpers';
+import { EEventTypes } from './event-card-types';
 import { EventsCounter } from './EventsCounters';
 
 interface IEventCardProps {
@@ -33,15 +34,13 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
         tmp.set(item.type, 1)
       }
     });
-    return sortMapKeyByOrder(tmp, ['alarm', 'warning', 'info']);
+    const c = Object.values(EEventTypes)// [EEventTypes.ALARM, EEventTypes.WARNING, EEventTypes.INFO]);
+    return sortMapKeyByOrder(tmp, c)
   }
 
   private async getEvents() {
     try {
       const events:TEventItems = await EventReader.getDateEvents(this.props.date);
-      //TODO получил массив объектов, теперь надо проверить их type (info/alarm/warning ...)
-      // и сделать счётчики на каждый тип, а потом их значения и вывести
-      console.log(events);
       this.setState({events: this.getEventTypesCount(events)})
     } catch (e) {
       this.setState({events:new Map()})
@@ -64,8 +63,3 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
     )
   }
 }
-/*
-      <div key = {this.props.date} className='float-left'>
-        <li>{this.props.date}{this.getInfo()}</li>
-      </div>
-*/

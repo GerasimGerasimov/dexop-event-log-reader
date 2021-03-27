@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import { EEventTypes } from './event-card-types';
+
 
 interface IEventsCountersProps {
   events: Map<string, number>;
@@ -15,9 +17,9 @@ export class EventsCounter extends Component<IEventsCountersProps, IEventsCounte
 
   private getIconStyle(event_type: string): {color: string, icon: string} {
     const icons: {[index: string]: any} = {
-      'alarm': {color:'red', icon:'⬥'},
-      'warning': {color:'#ffba00', icon:'∎'},
-      'info': {color:'#8000C0', icon:'▲'},
+      [EEventTypes.ALARM]: {color:'red', icon:'⬥'},
+      [EEventTypes.WARNING]: {color:'#ffba00', icon:'∎'},
+      [EEventTypes.INFO]: {color:'#8000C0', icon:'▲'},
       'defaulf': ()=>{
         console.log(`${event_type} not found`);
         return {color:'gray', icon:'?'};
