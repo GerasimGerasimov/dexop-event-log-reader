@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { EventReader } from '../controller/event-reader';
 import { TEventItem, TEventItems } from '../types/events';
+import { sortMapKeyByOrder } from './event-card-helpers';
 import { EventsCounter } from './EventsCounters';
 
 interface IEventCardProps {
@@ -23,16 +24,16 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
   }
 
   private getEventTypesCount(events: TEventItems): Map<string, number>{
-    const res: Map<string, number> = new Map();
+    let tmp: Map<string, number> = new Map();
     events.forEach( item => {
-      if (res.has(item.type)) {
-        let cnt: number = res.get(item.type) || 0;
-        res.set(item.type, ++cnt)
+      if (tmp.has(item.type)) {
+        let cnt: number = tmp.get(item.type) || 0;
+        tmp.set(item.type, ++cnt)
       } else {
-        res.set(item.type, 1)
+        tmp.set(item.type, 1)
       }
-    })
-    return res;
+    });
+    return sortMapKeyByOrder(tmp, ['alarm', 'warning', 'info']);
   }
 
   private async getEvents() {
