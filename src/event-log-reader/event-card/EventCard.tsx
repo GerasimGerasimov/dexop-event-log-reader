@@ -6,11 +6,12 @@ import { EEventTypes } from './event-card-types';
 import { EventsCounter } from './EventsCounters';
 
 interface IEventCardProps {
-  date: string
+  date: string;
 }
 
 interface IEventCardState {
-  events: Map<string, number>
+  events: Map<string, number>;
+  isLoaded: boolean;
 }
 
 export default class EventCard extends Component<IEventCardProps, IEventCardState> {
@@ -20,7 +21,8 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
   constructor(props: IEventCardProps) {
     super(props)
     this.state = {
-      events: new Map()
+      events: new Map([['alarm', 0], ['warning', 0], ['info', 0]]),
+      isLoaded: false
     }
   }
 
@@ -41,7 +43,10 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
   private async getEvents() {
     try {
       const events:TEventItems = await EventReader.getDateEvents(this.props.date);
-      this.setState({events: this.getEventTypesCount(events)})
+      this.setState({
+        events: this.getEventTypesCount(events),
+        isLoaded: true
+      })
     } catch (e) {
       this.setState({events:new Map()})
       console.log(e)
@@ -58,8 +63,14 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
     return (
       <li className = "list-group-item list-group-item-action d-flex justify-content-between align-items-center m-1 shadow-sm">
         {this.props.date}
-        <EventsCounter events = {this.state.events} />
+        {this.state.isLoaded
+          ? <EventsCounter events = {this.state.events} />
+          : <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        }
+        
       </li>
     )
   }
 }
+//Пример спиннера при загрузке
+//https://itchief.ru/examples/lab.php?topic=bootstrap&file=b4-border-spinner-in-button
