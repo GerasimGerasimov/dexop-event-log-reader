@@ -4,7 +4,7 @@ import EventsTable from "../../components/table/EventsTable";
 import FilterSettings from "../../Forms/FilterSettings/FilterSettings";
 
 import Paginator from "./components/paginator/paginator";
-import './Events.css'
+import './event-table-page.css'
 import EventsHeaderMenu from "./menu/EventsHeaderMenu";
 import { IEventQueryDirection, IEventSortMode, IEventsQuery, IEventsRespond, ISearchRangeQuery, ISortDirection } from "../../sort-modes/sort-modes";
 import { TEventItem } from "../../../event-helpers/types/events";
@@ -30,7 +30,7 @@ const DefaultRange: ISearchRangeQuery = {
   event:    IEventSortMode.All
 }
 
-export default class Events extends Component <IEventsProps,IEventsState> {
+export default class EventTablePage extends Component <IEventsProps,IEventsState> {
   private EventsModel: TEventsModel;
 
   constructor(props: IEventsProps){

@@ -3,7 +3,7 @@ import { EventReader } from '../controller/event-reader';
 import { TEventItems } from '../../event-helpers/types/events';
 import { sortMapKeyByOrder } from './event-card-helpers';
 import { EEventTypes } from './event-card-types';
-import { EventsCounter } from './EventsCounters';
+import { EventsCounter } from './event-counters';
 
 interface IEventCardProps {
   date: string;

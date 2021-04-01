@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { EventReader } from "../controller/event-reader";
 import EventsHeaderMenu from "../header-menu/EventsHeaderMenu";
 import '../Events.css'
-import EventCard from "../event-card/EventCard";
+import EventCard from "../event-card/event-card";
 
 interface IDateCardsContainerProps {
 
@@ -35,10 +35,6 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
     }
     console.log(this.count++)
   }
-
-  /*TODO после загрузки дат карточек, запустить процесс чтения данных
-  для этих карточек, и вывести скокот каких событий случалось в карточке,
-  (тип события):(кол-во событий этого типа)*/
 
   private handlerToolMenu(name: string, status: boolean){
     /*const handlers: {[handlerName: string]: any} = {
