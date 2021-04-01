@@ -8,4 +8,10 @@ export interface TEventItem {
   utime:number;     //1613621197902
 }
 
+export class TEventDefaultDetails {
+  comment: string = '';
+  initialValue: string = '';
+  todo: string = '';
+} 
+
 export type TEventItems = Array<TEventItem>;

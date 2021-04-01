@@ -2,13 +2,16 @@ import React, { Component } from "react";
 import Modal from "../../../components/HOC/Modal";
 import EventsTable from "../../components/table/EventsTable";
 import FilterSettings from "../../Forms/FilterSettings/FilterSettings";
-import { IEventQueryDirection, ISortDirection, IEventsQuery, IEventsRespond, IEventSortMode, ISearchRangeQuery} from "../../../server/ieventsdata";
-import { EventsModel } from "../../../server/server";
+
 import Paginator from "./components/paginator/paginator";
 import './Events.css'
 import EventsHeaderMenu from "./menu/EventsHeaderMenu";
+import { IEventQueryDirection, IEventSortMode, IEventsQuery, IEventsRespond, ISearchRangeQuery, ISortDirection } from "../../sort-modes/sort-modes";
+import { TEventItem } from "../../../event-helpers/types/events";
+import { TEventsModel } from "../../sort-modes/events-sorter";
 
-interface IEventsProps{
+interface IEventsProps {
+  Events: Array<TEventItem>;
 }
 
 interface IEventsState{
@@ -28,6 +31,7 @@ const DefaultRange: ISearchRangeQuery = {
 }
 
 export default class Events extends Component <IEventsProps,IEventsState> {
+  private EventsModel: TEventsModel;
 
   constructor(props: IEventsProps){
     super(props)
@@ -53,6 +57,7 @@ export default class Events extends Component <IEventsProps,IEventsState> {
       showModal: false,
       filterEnable: false
     }
+    this.EventsModel = new TEventsModel(props.Events)
   }
 
   private getNextIndex(direction: IEventQueryDirection): number {
@@ -98,7 +103,7 @@ export default class Events extends Component <IEventsProps,IEventsState> {
   }
 
   getData(){
-    const respond:IEventsRespond = EventsModel.getItems(this.state.query);
+    const respond:IEventsRespond = this.EventsModel.getItems(this.state.query);
     this.setState({respond})
   }
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { EventReader } from '../controller/event-reader';
-import { TEventItems } from '../types/events';
+import { TEventItems } from '../../event-helpers/types/events';
 import { sortMapKeyByOrder } from './event-card-helpers';
 import { EEventTypes } from './event-card-types';
 import { EventsCounter } from './EventsCounters';

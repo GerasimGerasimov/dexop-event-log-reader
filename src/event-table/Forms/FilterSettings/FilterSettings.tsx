@@ -1,7 +1,8 @@
 import React, { Component} from "react"
 import { getLocalDateFormValue} from "../../helpers/timeutils";
 import { getKeyOfEnumByValue } from "../../helpers/utils";
-import { IEventSortMode, ISearchRangeQuery } from "../../../server/ieventsdata";
+import { IEventSortMode, ISearchRangeQuery } from "../../sort-modes/sort-modes";
+
 import './FilterSettings.css'
 
 export interface IFilterSettingsCloseHandler {
