@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './TougleButton.css';
+import './SelfTougledButton.css';
 import { IToolButtonProps } from '../iToolButton';
 
-export const TougleButton = (props: IToolButtonProps) => {
+export const SelfTougledButton = (props: IToolButtonProps) => {
     const [tougle, changeTougle] = useState(props.isTougle || false);
 
     const classes = [
