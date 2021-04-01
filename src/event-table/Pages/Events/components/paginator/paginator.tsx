@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { IEventQueryDirection } from "../../../../../server/ieventsdata";
+import { IEventQueryDirection } from "../../../../sort-modes/sort-modes";
+
 import './paginator.css'
 
 interface IPaginatorProps {
