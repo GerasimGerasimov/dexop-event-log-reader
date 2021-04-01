@@ -55,7 +55,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
 
   render(){
     const items = this.state.cards.map((item: string, index: number) => {
-      return (<EventCard date={item} key={item}/>)
+      return (<EventCard date={item} key={`${item}-${index}`}/>)
     })
 
     return (
