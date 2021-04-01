@@ -38,7 +38,9 @@ export class EventsCounter extends Component<IEventsCountersProps, IEventsCounte
   render () {
     const items = Array.from(this.props.events).map((item) => {
       return (
-        <div className='d-inline badge badge-pill badge-primary mr-1'>
+        <div className='d-inline badge badge-pill badge-primary mr-1'
+          key = {`${item[0]}-${item[1]}`}
+          >
           {this.getIconElement(item[0])}
           <span className="pl-1">{item[1]}</span>
         </div>
