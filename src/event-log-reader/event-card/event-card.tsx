@@ -5,8 +5,13 @@ import { sortMapKeyByOrder } from './event-card-helpers';
 import { EEventTypes } from './event-card-types';
 import { EventsCounter } from './event-counters';
 
+interface IOpenCardHandler {
+  (date: string): void;
+}
+
 interface IEventCardProps {
   date: string;
+  OpenCardHandler: IOpenCardHandler;
 }
 
 interface IEventCardState {
@@ -61,13 +66,13 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
 
   render() {
     return (
-      <li className = "list-group-item list-group-item-action d-flex justify-content-between align-items-center m-1 shadow-sm">
+      <li className = "list-group-item list-group-item-action d-flex justify-content-between align-items-center m-1 shadow-sm"
+          onClick={()=>this.props.OpenCardHandler(this.props.date)}>
         {this.props.date}
         {this.state.isLoaded
           ? <EventsCounter events = {this.state.events} />
           : <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         }
-        
       </li>
     )
   }

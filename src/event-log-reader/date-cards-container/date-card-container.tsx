@@ -3,6 +3,7 @@ import { EventReader } from "../controller/event-reader";
 import EventsHeaderMenu from "../header-menu/EventsHeaderMenu";
 import '../Events.css'
 import EventCard from "../event-card/event-card";
+import {Link} from 'react-router-dom';
 
 interface IDateCardsContainerProps {
 
@@ -45,13 +46,18 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
     */
   }
 
-  private handlerCardClick() {
+  private handlerOpenCard(date: string) {
     /*TODO при клике на карточку, открыть таблицу с событиями */
+    console.log('handlerOpenCard->',date)
   }
 
   render(){
     const items = this.state.cards.map((item: string, index: number) => {
-      return (<EventCard date={item} key={`${item}-${index}`}/>)
+      return (
+      <EventCard
+        date={item} key={`${item}-${index}`}
+        OpenCardHandler = {this.handlerOpenCard.bind(this)}
+      />)
     })
 
     return (
