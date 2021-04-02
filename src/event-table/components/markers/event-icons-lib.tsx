@@ -1,18 +1,23 @@
 import React from "react";
+import { EEventTypes } from "../../../event-log-reader/event-card/event-card-types";
 import './event-icon.css';
 
 /*TODO есть же похожий вариант с ENUM, найти и применить */
 export function getEventIconsByType(type: string): JSX.Element {
   const icons: {[index: string]: any} = {
-    'alarm': getIconAlarm,
-    'warning': getIconWarning,
-    'info': getIconInfo,
-    'defaulf': ()=>{
-      console.log(`${type} not found`);
-      return getIconInfo;
-    }
+    [EEventTypes.ALARM]: getIconAlarm,
+    [EEventTypes.WARNING]: getIconWarning,
+    [EEventTypes.INFO]: getIconInfo,
+    'defaulf': getIconDefault
   }
   return (icons[type] || icons['default'])()
+}
+
+function getIconDefault(): JSX.Element{
+  console.log(`getEventIconsByType: type not found`);
+  return (
+    <p>?</p>
+  )
 }
 
 function getIconAlarm(): JSX.Element{
