@@ -7,11 +7,13 @@ import Paginator from "./components/paginator/paginator";
 import './event-table-page.css'
 import EventsHeaderMenu from "./menu/EventsHeaderMenu";
 import { IEventQueryDirection, IEventSortMode, IEventsQuery, IEventsRespond, ISearchRangeQuery, ISortDirection } from "../../sort-modes/sort-modes";
-import { TEventItem } from "../../../event-helpers/types/events";
+import { TEventItem, TEventItems } from "../../../event-helpers/types/events";
 import { TEventsModel } from "../../sort-modes/events-sorter";
+import { EventReader } from "../../../event-log-reader/controller/event-reader";
+import { RouteComponentProps } from "react-router-dom";
 
 interface IEventsProps {
-  Events: Array<TEventItem>;
+  date: string;
 }
 
 interface IEventsState{
@@ -30,12 +32,16 @@ const DefaultRange: ISearchRangeQuery = {
   event:    IEventSortMode.All
 }
 
-export default class EventTablePage extends Component <IEventsProps,IEventsState> {
-  private EventsModel: TEventsModel;
+export default class EventTablePage extends Component <RouteComponentProps<IEventsProps>,IEventsState> {
+  private EventsModel: TEventsModel | undefined;
+  private events_date: string = ''
 
-  constructor(props: IEventsProps){
-    console.log('EventTablePage')
-    super(props)
+  constructor({match} : RouteComponentProps<IEventsProps>) {
+    super( match as any);
+
+    this.events_date = match.params.date;
+
+    console.log('EventTablePage: ', this.events_date);
     this.state = {
       query: {
         FromIndex:0,
@@ -58,7 +64,34 @@ export default class EventTablePage extends Component <IEventsProps,IEventsState
       showModal: false,
       filterEnable: false
     }
-    this.EventsModel = new TEventsModel(props.Events)
+  }
+
+  private async getEvents() {
+    try {
+      const events:TEventItems = await EventReader.getDateEvents(this.events_date);
+      this.EventsModel = new TEventsModel(events);
+      this.getData();
+      /*
+      this.setState({
+        events: this.getEventTypesCount(events),
+        isLoaded: true
+      })
+      */
+    } catch (e) {
+      //this.setState({events:new Map()})
+      console.log(e)
+    }
+  }
+
+  componentDidMount(){
+    this.getEvents();
+  }
+
+  getData(){
+    if (this.EventsModel) {
+      const respond:IEventsRespond = this.EventsModel.getItems(this.state.query);
+      this.setState({respond})
+    }
   }
 
   private getNextIndex(direction: IEventQueryDirection): number {
@@ -97,15 +130,6 @@ export default class EventTablePage extends Component <IEventsProps,IEventsState
     if (this.isNextPossible(direction)) {
       this.readPortionOfItems(direction)
     }
-  }
-
-  componentDidMount(){
-    this.getData()
-  }
-
-  getData(){
-    const respond:IEventsRespond = this.EventsModel.getItems(this.state.query);
-    this.setState({respond})
   }
 
   private setNumberOfItemsOnPage(QueriedQuantity: number){

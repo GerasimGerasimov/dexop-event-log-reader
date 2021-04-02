@@ -1,11 +1,12 @@
 import React from "react";
 import './event-icon.css';
 
+/*TODO есть же похожий вариант с ENUM, найти и применить */
 export function getEventIconsByType(type: string): JSX.Element {
   const icons: {[index: string]: any} = {
-    'a': getIconAlarm,
-    'w': getIconWarning,
-    'i': getIconInfo,
+    'alarm': getIconAlarm,
+    'warning': getIconWarning,
+    'info': getIconInfo,
     'defaulf': ()=>{
       console.log(`${type} not found`);
       return getIconInfo;
