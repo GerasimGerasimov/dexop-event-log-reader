@@ -4,6 +4,7 @@ import { TEventItems } from '../../event-helpers/types/events';
 import { sortMapKeyByOrder } from './event-card-helpers';
 import { EEventTypes } from './event-card-types';
 import { EventsCounter } from './event-counters';
+import {Link , NavLink} from 'react-router-dom';
 
 interface IOpenCardHandler {
   (date: string): void;
@@ -11,7 +12,6 @@ interface IOpenCardHandler {
 
 interface IEventCardProps {
   date: string;
-  OpenCardHandler: IOpenCardHandler;
 }
 
 interface IEventCardState {
@@ -65,15 +65,24 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
   }
 
   render() {
+    const url = `/events/${this.props.date}`;
     return (
-      <li className = "list-group-item list-group-item-action d-flex justify-content-between align-items-center m-1 shadow-sm"
-          onClick={()=>this.props.OpenCardHandler(this.props.date)}>
-        {this.props.date}
-        {this.state.isLoaded
-          ? <EventsCounter events = {this.state.events} />
-          : <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        }
-      </li>
+      <NavLink
+        to={{
+          pathname: url,
+          state: {
+            events: this.state.events
+          }
+        }}
+      >
+        <li className = "list-group-item list-group-item-action d-flex justify-content-between align-items-center m-1 shadow-sm">
+          {this.props.date}
+          {this.state.isLoaded
+            ? <EventsCounter events = {this.state.events} />
+            : <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          }
+        </li>
+      </NavLink>
     )
   }
 }

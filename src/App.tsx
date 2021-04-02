@@ -5,13 +5,13 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import EventTablePage from './event-table/Pages/Events/event-table-page';
 
 function App() {
+  
   return (
     <BrowserRouter>
       <div className="App">
         <Switch>
-          <DateCardsContainer/>
-          <Route exact path="/events"       component={DateCardsContainer}/>
-          <Route       path="/events/:date" component={EventTablePage}/>
+          <Route exact path="/"       component={DateCardsContainer}/>
+          <Route exact path="/events/:date" component={EventTablePage}/>
         </Switch>
       </div>
     </BrowserRouter>

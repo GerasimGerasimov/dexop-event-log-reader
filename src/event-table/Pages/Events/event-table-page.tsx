@@ -34,6 +34,7 @@ export default class EventTablePage extends Component <IEventsProps,IEventsState
   private EventsModel: TEventsModel;
 
   constructor(props: IEventsProps){
+    console.log('EventTablePage')
     super(props)
     this.state = {
       query: {
