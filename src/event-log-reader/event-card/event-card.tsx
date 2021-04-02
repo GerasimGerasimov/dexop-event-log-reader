@@ -4,7 +4,7 @@ import { TEventItems } from '../../event-helpers/types/events';
 import { sortMapKeyByOrder } from './event-card-helpers';
 import { EEventTypes } from './event-card-types';
 import { EventsCounter } from './event-counters';
-import {Link , NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 interface IOpenCardHandler {
   (date: string): void;

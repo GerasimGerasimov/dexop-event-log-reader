@@ -45,10 +45,6 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
     */
   }
 
-  private handlerOpenCard(date: string) {
-    /*TODO при клике на карточку, открыть таблицу с событиями */
-  }
-
   render(){
     const items = this.state.cards.map((item: string, index: number) => {
       return (
