@@ -11,6 +11,7 @@ interface IEventsCountersState {
 }
 
 export class EventsCounter extends Component<IEventsCountersProps, IEventsCountersState> {
+  
   constructor (props: IEventsCountersProps) {
     super(props)
   }
@@ -29,7 +30,7 @@ export class EventsCounter extends Component<IEventsCountersProps, IEventsCounte
   }
 
   private getIconElement(event_type: string): JSX.Element {
-    const {color, icon} = {... this.getIconStyle(event_type)}
+    const {color, icon} = {...this.getIconStyle(event_type)}
     return (
       <span className="font-weight-bold h6" style={{ color }}>{icon}</span>
     )

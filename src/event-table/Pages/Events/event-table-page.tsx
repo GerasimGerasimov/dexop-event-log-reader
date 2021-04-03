@@ -7,7 +7,7 @@ import Paginator from "./components/paginator/paginator";
 import './event-table-page.css'
 import EventsHeaderMenu from "./menu/EventsHeaderMenu";
 import { IEventQueryDirection, IEventSortMode, IEventsQuery, IEventsRespond, ISearchRangeQuery, ISortDirection } from "../../../event-models/events/sort-modes";
-import { TEventItem, TEventItems } from "../../../event-models/events";
+import { TEventItems } from "../../../event-models/events";
 import { TEventsModel } from "../../../event-models/events/events-sorter";
 import { EventReader } from "../../../event-log-reader/controller/event-reader";
 import { RouteComponentProps } from "react-router-dom";
@@ -50,7 +50,7 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
           DateTimeSortDirection: ISortDirection.Up,
           EventsSortMode:  IEventSortMode.All
         },
-        Range:{... DefaultRange}
+        Range:{...DefaultRange}
       },
       respond: {
         ClientID: '',
@@ -148,8 +148,8 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
   }
 
   private changeDateSortMode(): void {
-    const query = {... this.state.query}
-    const { DateTimeSortDirection }  =  { ...query.SortMode};
+    const query = {...this.state.query}
+    const { DateTimeSortDirection }  =  {...query.SortMode};
     query.SortMode.DateTimeSortDirection = this.tougleDateSortDirection(DateTimeSortDirection);
     if (query !== undefined) {
       this.setState({query}, ()=>this.getData())
@@ -172,8 +172,8 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
   }
 
   private changeEventsSortMode() {
-    const query = {... this.state.query}
-    const { EventsSortMode }  =  { ...query.SortMode};
+    const query = {...this.state.query}
+    const { EventsSortMode }  =  {...query.SortMode};
     query.SortMode.EventsSortMode = this.tougleEventsSortMode(EventsSortMode);
     if (query !== undefined) {
       this.setState({query},(()=>{
@@ -192,7 +192,7 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
   }
 
   private setRange(range: ISearchRangeQuery){
-    const query = {... this.state.query}
+    const query = {...this.state.query}
     query.Range = range;
     this.setState({query},(()=>{
       this.getData();
@@ -227,8 +227,8 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
   }
 
   private enableFilter(range: ISearchRangeQuery) {
-    const query = {... this.state.query}
-    query.Range = {... query.Range, ... range};
+    const query = {...this.state.query}
+    query.Range = {...query.Range, ...range};
     this.setRange(query.Range);
     this.setState({
       showModal: false,

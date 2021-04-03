@@ -7,7 +7,7 @@ const event_log_reader_events = `${event_log_reader}v1/events/`;
 export class TEventReader {
   
   constructor(){
-
+    console.log('TEventReader created');
   }
 
   public async getDates(): Promise<Array<string>  | Error > {

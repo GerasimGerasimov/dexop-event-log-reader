@@ -1,7 +1,7 @@
 //Библиотека полезных функций
 
 export function  changeSingleQuotesToDouble(attr: string): any {
-    const str: any = [].map.call(attr, c => c!=='\''? c : '\"').join('')
+    const str: any = [].map.call(attr, c => c!=='\''? c : '"').join('')
     let res = JSON.parse(str);
     return res;
   }

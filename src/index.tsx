@@ -5,11 +5,6 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ModelDates } from './event-models/dates/dates-model';
-
-/* (async () => {
-  await ModelDates.loadDates()
-})() */
 
 ReactDOM.render(
   <React.StrictMode>

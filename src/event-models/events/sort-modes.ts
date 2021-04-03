@@ -1,13 +1,10 @@
 import { TEventItem } from "../events";
-import { EEventTypes } from "../../event-log-reader/event-card/event-card-types";
 
 export interface ISearchRangeQuery {
   dateFrom?: number;
   dateTo?: number;
   event?: IEventSortMode;
 }
-
-const al = EEventTypes.ALARM
 
 export enum IEventSortMode {
   All     = '',

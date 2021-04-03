@@ -54,8 +54,8 @@ export default class EventsTable extends Component<IEventTableProps ,IEventsTabl
             <tbody>
               {
                 this.props.items.map((item, index)=>{
-                  const {tag, date, details, type} = {... item};
-                  const {initialValue, comment, todo} = {...  this.parseDetails(details)}
+                  const {tag, date, details, type} = {...item};
+                  const {comment} = {...this.parseDetails(details)}//{initialValue, comment, todo}
                   return (
                     <tr key={index}>
                       <td align="left">{this.getFormatedDateTime(date)}</td>

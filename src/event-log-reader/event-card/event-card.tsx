@@ -6,10 +6,6 @@ import { EEventTypes } from './event-card-types';
 import { EventsCounter } from './event-counters';
 import {NavLink} from 'react-router-dom';
 
-interface IOpenCardHandler {
-  (date: string): void;
-}
-
 interface IEventCardProps {
   date: string;
 }

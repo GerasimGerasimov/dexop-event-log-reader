@@ -101,7 +101,7 @@ export class TEventsModel {
   //Если указаны ограничения по времени в полях Range, то удалить все записи не входящие в диапазон
   private filterByDataRange(source: Array<TEventItem>, query: IEventsQuery):Array<TEventItem> {
     let res: Array<TEventItem> = source;
-    const {dateFrom, dateTo} = {... query.Range};
+    const {dateFrom, dateTo} = {...query.Range};
     if ((dateFrom !== undefined) && (dateTo !== undefined)) {
       res = source.filter((item)=>{
         const itemDate: number = new Date(item.date).getTime();
@@ -114,7 +114,7 @@ export class TEventsModel {
   //Если в Range есть НЕ All event то убрать все события кроме этого
   private filterByEvent(source: Array<TEventItem>, query: IEventsQuery):Array<TEventItem> {
     let res: Array<TEventItem> = source;
-    const {event} = {... query.Range};
+    const {event} = {...query.Range};
     if (event !== undefined) {
       if (event !== IEventSortMode.All) {
         res = source.filter(item => event === item.type)
