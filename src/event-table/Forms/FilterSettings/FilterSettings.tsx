@@ -1,7 +1,7 @@
 import React, { Component} from "react"
 import { getLocalDateFormValue} from "../../helpers/timeutils";
 import { getKeyOfEnumByValue } from "../../helpers/utils";
-import { IEventSortMode, ISearchRangeQuery } from "../../sort-modes/sort-modes";
+import { IEventSortMode, ISearchRangeQuery } from "../../../event-models/events/sort-modes";
 
 import './FilterSettings.css'
 

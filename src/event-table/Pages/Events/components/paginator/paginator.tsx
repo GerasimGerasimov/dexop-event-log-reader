@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { IEventQueryDirection } from "../../../../sort-modes/sort-modes";
+import { IEventQueryDirection } from "../../../../../event-models/events/sort-modes";
 
 import './paginator.css'
 

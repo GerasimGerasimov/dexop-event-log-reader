@@ -6,9 +6,9 @@ import FilterSettings from "../../Forms/FilterSettings/FilterSettings";
 import Paginator from "./components/paginator/paginator";
 import './event-table-page.css'
 import EventsHeaderMenu from "./menu/EventsHeaderMenu";
-import { IEventQueryDirection, IEventSortMode, IEventsQuery, IEventsRespond, ISearchRangeQuery, ISortDirection } from "../../sort-modes/sort-modes";
+import { IEventQueryDirection, IEventSortMode, IEventsQuery, IEventsRespond, ISearchRangeQuery, ISortDirection } from "../../../event-models/events/sort-modes";
 import { TEventItem, TEventItems } from "../../../event-helpers/types/events";
-import { TEventsModel } from "../../sort-modes/events-sorter";
+import { TEventsModel } from "../../../event-models/events/events-sorter";
 import { EventReader } from "../../../event-log-reader/controller/event-reader";
 import { RouteComponentProps } from "react-router-dom";
 
