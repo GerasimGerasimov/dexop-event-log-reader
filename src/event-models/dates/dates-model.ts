@@ -1,6 +1,5 @@
 import { EventReader } from "../../event-log-reader/controller/event-reader";
-import { delay } from "../../utils";
-import { TDatesList } from "../events";
+import { waitForUnErrorExecution } from "../../utils";
 
 export interface IDateEventsCounters {
   events_counts_cash: Map<string, number>;
@@ -14,7 +13,7 @@ export class TDates {
   private LoadTryCount: number = 0;
 
   constructor() {
-    this.loadDataIterable();
+    this.waitForDates();
   }
 
   get Dates(): Map<string, IDateEventsCounters> {
@@ -33,35 +32,13 @@ export class TDates {
     return res;
   }
 
-
-  public async * asyncGenerator (func: (value?:any) => Promise<void | any>) {
-    let count = 0;
-    while (true) {
-      count ++;
-      try {
-        const dates = await func();
-        yield {count, dates, error:''};
-        break;
-      } catch (e) {
-        yield {count, dates: undefined, error: e.message};
-      }
-    }
-  }
-
-  //TODO сделать async функцию которая с переповторами дождётся данных
-  
-  private async loadDataIterable () {
+  private async waitForDates() {
     this.isLoaded = false;
-    for await (let {count, dates, error} of this.asyncGenerator(this.loadDates.bind(this))) {
-      console.log(count, dates, error);//сюда попадаю когда данные прочитаны
-      if (dates) {
-        this.dates = this.loadedDatesToMap(dates);
-      }
-      await delay(1000);
-    }
-    
+    const dates: Array<string> = await waitForUnErrorExecution(this.loadDates.bind(this)) as Array<string>;
+    this.dates = this.loadedDatesToMap(dates); 
     this.isLoaded = true;
   }
+
 
   public async loadDates(): Promise<Array<string>> {
     console.log(`Try to load Dates List: ${this.LoadTryCount++}`)
