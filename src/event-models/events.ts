@@ -1,3 +1,5 @@
+export type TDatesList = Array<string> | Error;
+
 export interface TEventItem {
   id: number;       //1
   date: string;     //'Feb 18 2021 11:06:37 GMT+0700'

@@ -3,6 +3,8 @@ import { EventReader } from "../controller/event-reader";
 import EventsHeaderMenu from "../header-menu/EventsHeaderMenu";
 import '../Events.css'
 import EventCard from "../event-card/event-card";
+import { TDatesList } from "../../event-models/events";
+import { ModelDates } from "../../event-models/dates/dates-model";
 
 interface IDateCardsContainerProps {
 
@@ -13,21 +15,21 @@ interface IDateCardsContainerState {
   filterEnable: boolean;
 }
 
-type TGetDates = Array<string> | Error;
-
 export default class DateCardsContainer extends Component <IDateCardsContainerProps, IDateCardsContainerState> {
   private count: number = 0;
+  private dates: Map<string, any> = new Map();
   constructor(props: IDateCardsContainerProps) {
     super(props);
     this.state = {
       cards:[],
       filterEnable: false
     }
+    this.dates = ModelDates.Dates;
   }
 
   private async getDates() {
     try {
-      const cards:TGetDates = await EventReader.getDates();
+      const cards:TDatesList = await EventReader.getDates();
       this.setState({cards: cards as Array<string>})
       console.log(cards);
     } catch (e) {
