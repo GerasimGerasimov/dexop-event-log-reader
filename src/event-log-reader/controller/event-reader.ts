@@ -1,4 +1,4 @@
-import { TEventItems } from "../../event-helpers/types/events";
+import { TEventItems } from "../../event-models/events";
 
 const event_log_reader = 'http://localhost:5008/';
 const event_log_reader_dates = `${event_log_reader}v1/dates/`;

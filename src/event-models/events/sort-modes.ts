@@ -1,4 +1,4 @@
-import { TEventItem } from "../../event-helpers/types/events";
+import { TEventItem } from "../events";
 import { EEventTypes } from "../../event-log-reader/event-card/event-card-types";
 
 export interface ISearchRangeQuery {

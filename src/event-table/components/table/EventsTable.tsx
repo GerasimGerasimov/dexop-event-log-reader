@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TEventDefaultDetails, TEventItem } from "../../../event-helpers/types/events";
+import { TEventDefaultDetails, TEventItem } from "../../../event-models/events";
 import Markers from "../markers/event-icon";
 
 import './EventsTable.css'

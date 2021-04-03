@@ -1,4 +1,4 @@
-import { TEventItem } from "../../event-helpers/types/events";
+import { TEventItem } from "../events";
 import {IEventSortMode, IEventsQuery, IEventsRespond, IEventsSortMode, ISortDirection } from "./sort-modes";
 
 export const count = 10;
