@@ -4,9 +4,6 @@ import DateCardsContainer from './event-log-reader/date-cards-container/date-car
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import EventTablePage from './event-table/Pages/Events/event-table-page';
 
-/*TODO в EventTablePage в заголовке вывести Дату, события которой изучаются */
-/*TODO в EventTablePage так как Дата известна (в заголовке), в таблице выводить только время */
-/*TODO в EventTablePage так как Дата известна (в заголовке), для фильтрации использовать только время (Time Picker) */
 /*TODO в EventTablePage перетащить стили из исходого проекта (а то нализает на заголовок при прокрутке вниз) */
 /*TODO в DateCardsContainer сделать фильтрацию по Датам, использовать только дату (Date Picker) */
 /*TODO в DateCardsContainer сделать сортировку по Датам*/
@@ -14,8 +11,6 @@ import EventTablePage from './event-table/Pages/Events/event-table-page';
 /*TODO в EventTablePage и DateCardsContainer
   При возврате со страницы EventTablePage, надо попадать на туже страницу DateCardsContainer
   с которой пришёл, без загрузки карт заново (тут через state-management и кэширование)*/
-/*TODO разгрести Warnings от React */
-/*TODO разгрести Warnings от TypeScript */
 
 function App() {
   

@@ -49,7 +49,9 @@ export class EventsCounter extends Component<IEventsCountersProps, IEventsCounte
     })
 
     return (
-      <div>{items}</div>
+      <div>
+        {items}
+      </div>
     )
   }
 }

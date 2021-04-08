@@ -1,5 +1,5 @@
 import React, { Component} from "react"
-import { getLocalDateFormValue} from "../../helpers/timeutils";
+import { getMaxTimeFromRange, getMinTimeFromRange} from "../../helpers/timeutils";
 import { getKeyOfEnumByValue } from "../../helpers/utils";
 import { IEventSortMode, ISearchRangeQuery } from "../../../event-models/events/sort-modes";
 
@@ -12,10 +12,12 @@ export interface IFilterSettingsCloseHandler {
 export interface IFilterSettingsProps {
   onExitHandler:IFilterSettingsCloseHandler;
   Range: ISearchRangeQuery;
+  AvalibleTimeRange:Array<string>;
+  EventDate: string;
 }
 
 export interface IFilterSettingsState {
- useDataRangeInSearch: boolean;
+ useTimeRangeInSearch: boolean;
  useEventTypeInSearch: boolean;
 }
 
@@ -28,22 +30,27 @@ export default class FilterSettings extends Component<IFilterSettingsProps, IFil
   constructor (props: IFilterSettingsProps) {
     super(props);
     this.state={
-      useDataRangeInSearch: true,
+      useTimeRangeInSearch: true,
       useEventTypeInSearch: true
     }
   }
  
   componentDidMount(){
-    this.refFromDate.current!.value = getLocalDateFormValue(this.props.Range.dateFrom);
-    this.refToDate.current!.value   = getLocalDateFormValue(this.props.Range.dateTo);
+    this.refFromDate.current!.min   =
+    this.refToDate.current!.min     =
+    this.refFromDate.current!.value = getMinTimeFromRange(this.props.AvalibleTimeRange);
+    this.refFromDate.current!.max =
+    this.refToDate.current!.max   = 
+    this.refToDate.current!.value = getMaxTimeFromRange(this.props.AvalibleTimeRange);
+
     let value: IEventSortMode = this.props.Range.event || IEventSortMode.All;
     let key = getKeyOfEnumByValue( IEventSortMode, value, 'All');
     this.refEvent.current!.value = key
   }
 
   private changeUseDateInSearch() {
-    const checkerTougle: boolean = !this.state.useDataRangeInSearch;
-    this.setState({useDataRangeInSearch:checkerTougle})
+    const checkerTougle: boolean = !this.state.useTimeRangeInSearch;
+    this.setState({useTimeRangeInSearch:checkerTougle})
   }
 
   private changeUseEventTypeInSearch() {
@@ -57,9 +64,9 @@ export default class FilterSettings extends Component<IFilterSettingsProps, IFil
             : ' d-none'
   }
 
-  private validateDateTime(DateTimeStr: string | undefined): number | undefined {
+  private validateTime(DateTimeStr: string | undefined): number | undefined {
     const dateTimeStr: string = DateTimeStr || '';
-    const ms = Date.parse(dateTimeStr);
+    const ms = Date.parse(`${this.props.EventDate} ${dateTimeStr}`);
     return  (isNaN(ms))
             ? undefined
             : ms
@@ -85,10 +92,10 @@ export default class FilterSettings extends Component<IFilterSettingsProps, IFil
   }
 
   private getQuery(): ISearchRangeQuery | undefined {
-    const dateFrom: number | undefined = this.validateDateTime(this.refFromDate.current?.value);
-    const dateTo  : number | undefined = this.validateDateTime(this.refToDate.current?.value);
+    const dateFrom: number | undefined = this.validateTime(this.refFromDate.current?.value);
+    const dateTo  : number | undefined = this.validateTime(this.refToDate.current?.value);
     const event   : IEventSortMode | undefined = this.validateSelectedEvent(this.refEvent.current?.value);
-    const useDate: boolean = this.state.useDataRangeInSearch;
+    const useDate: boolean = this.state.useTimeRangeInSearch;
     const useEvent: boolean = this.state.useEventTypeInSearch;
     if (this.setFocusOfNotValidElement(useDate, dateFrom, this.refFromDate)) { return undefined };
     if (this.setFocusOfNotValidElement(useDate, dateTo  , this.refToDate  )) { return undefined };
@@ -115,33 +122,33 @@ export default class FilterSettings extends Component<IFilterSettingsProps, IFil
           <div className='custom-control custom-checkbox'>
             <input  type="checkbox"
                     className="custom-control-input"
-                    id="useDataRangeInSearch"
-                    checked={this.state.useDataRangeInSearch}
+                    id="useTimeRangeInSearch"
+                    checked={this.state.useTimeRangeInSearch}
                     onChange={()=>this.changeUseDateInSearch()}/>
             <label  className="custom-control-label"
-                    htmlFor="useDataRangeInSearch">
-                    use DataRange In a Search
+                    htmlFor="useTimeRangeInSearch">
+                    use Time Range In a Search
             </label>
           </div>
         </div>
 
         <label
-          className={'search LabelFrom' + this.showIfUsed(this.state.useDataRangeInSearch)}
+          className={'search LabelFrom' + this.showIfUsed(this.state.useTimeRangeInSearch)}
           htmlFor="fromDate">from:</label>
         <input
-          type="datetime-local"
+          type="time"
           ref = {this.refFromDate}
           id='fromDate'
-          className={'search InputFrom' + this.showIfUsed(this.state.useDataRangeInSearch)}
+          className={'search InputFrom' + this.showIfUsed(this.state.useTimeRangeInSearch)}
           />
         <label
-          className={'search LabelTo' + this.showIfUsed(this.state.useDataRangeInSearch)}
+          className={'search LabelTo' + this.showIfUsed(this.state.useTimeRangeInSearch)}
           htmlFor="toDate">to:</label>
         <input
-          type="datetime-local"
+          type="time"
           ref = {this.refToDate}
           id='toDate'
-          className={'search InputTo' + this.showIfUsed(this.state.useDataRangeInSearch)}
+          className={'search InputTo' + this.showIfUsed(this.state.useTimeRangeInSearch)}
           />
 
         <div className='search EventConditionPicker'>
@@ -168,7 +175,7 @@ export default class FilterSettings extends Component<IFilterSettingsProps, IFil
         </div>
         <button
           className={'btn btn-primary btn-xs search Search'+
-                     this.showIfUsed(this.state.useDataRangeInSearch ||
+                     this.showIfUsed(this.state.useTimeRangeInSearch ||
                                      this.state.useEventTypeInSearch)}
           onClick={()=>this.exitHandler()}
         >Search</button>

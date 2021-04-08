@@ -19,3 +19,11 @@ export function getLocalDateFormValue(value: number | undefined): string {
   const date = new Date(dateFrom);
   return toDatetimeLocal(date);
 }
+
+export function getMinTimeFromRange(timeRange: Array<string>): string {
+  return timeRange[0] || '--:--:--'
+}
+
+export function getMaxTimeFromRange(timeRange: Array<string>): string {
+  return timeRange[timeRange.length - 1] || '--:--:--'
+}

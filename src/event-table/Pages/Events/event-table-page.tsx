@@ -71,14 +71,7 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
       const events:TEventItems = await EventReader.getDateEvents(this.events_date);
       this.EventsModel = new TEventsModel(events);
       this.getData();
-      /*
-      this.setState({
-        events: this.getEventTypesCount(events),
-        isLoaded: true
-      })
-      */
     } catch (e) {
-      //this.setState({events:new Map()})
       console.log(e)
     }
   }
@@ -242,6 +235,10 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
     : this.disableFilter()
   }
 
+  private getAvalibleTimeRangeInHHMMSS():Array<string> {
+    return this.EventsModel?.AvalibleTimeRange || []
+  }
+
   render() {
     const modal = this.state.showModal
     ? (
@@ -249,6 +246,8 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
         <FilterSettings
           onExitHandler = {this.handlerFilterFormClose.bind(this)}
           Range = {this.state.query.Range || DefaultRange}
+          AvalibleTimeRange = {this.getAvalibleTimeRangeInHHMMSS()}
+          EventDate = {this.events_date}
         />
       </Modal>
     )
@@ -261,6 +260,7 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
               ToolMenuHandler = {this.handlerToolMenu.bind(this)}
               isTougle = {this.state.filterEnable}
             />
+          <div><b>{this.events_date}</b></div>
           <div className='flex-all-client b1pxdgr'>
             <EventsTable
               items = {this.state.respond.Items}

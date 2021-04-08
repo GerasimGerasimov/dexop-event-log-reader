@@ -19,7 +19,7 @@ interface IEventsTableState {
 export default class EventsTable extends Component<IEventTableProps ,IEventsTableState> {
 
   private getFormatedDateTime(datetime: string): string {
-    const time = new Date(datetime).toLocaleString();
+    const time = new Date(datetime).toLocaleTimeString();
     return time;
   }
 
@@ -41,7 +41,7 @@ export default class EventsTable extends Component<IEventTableProps ,IEventsTabl
             <tr>
                 <th
                   onClick={()=>this.props.changeDateSortModeHandler()}>
-                  Date/Time {this.props.DateSortDirectionIcon}
+                  Time {this.props.DateSortDirectionIcon}
                 </th>
                 <th>AW</th>
                 <th

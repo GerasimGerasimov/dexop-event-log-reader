@@ -13,46 +13,38 @@ interface IDateCardsContainerProps {
 interface IDateCardsContainerState {
   cards: Array<string>;
   filterEnable: boolean;
+  isLoaded: boolean;
 }
 
 export default class DateCardsContainer extends Component <IDateCardsContainerProps, IDateCardsContainerState> {
-  private count: number = 0;
-  private dates: Map<string, any> = new Map();
   constructor(props: IDateCardsContainerProps) {
     super(props);
     this.state = {
       cards:[],
-      filterEnable: false
+      filterEnable: false,
+      isLoaded: false,
     }
-    this.dates = ModelDates.Dates;
   }
 
-  private async getDates() {
-    try {
-      const cards:TDatesList = await EventReader.getDates();
-      this.setState({cards: cards as Array<string>})
-      console.log(cards);
-    } catch (e) {
-      console.log(e)
-    }
-    console.log(this.count++)
+  private async getDatesAndEvents() {
+    await ModelDates.waitForDates()
+    this.setState({
+      cards: [... ModelDates.Dates.keys()] as Array<string>,
+      isLoaded: true
+    })
+  }
+
+  componentDidMount() {
+    this.getDatesAndEvents();
   }
 
   private handlerToolMenu(name: string, status: boolean){
-    /*const handlers: {[handlerName: string]: any} = {
-      'Search' : this.tougleFilter.bind(this),
-      'default'   : ()=>{console.log(`${name} not found`)}
-    }
-    return (handlers[name] || handlers['default'])(status)
-    */
   }
 
   render(){
     const items = this.state.cards.map((item: string, index: number) => {
       return (
-      <EventCard
-        date={item} key={`${item}-${index}`}
-      />)
+      <EventCard date={item} key={index} />)
     })
 
     return (
@@ -62,10 +54,12 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
             isTougle = {this.state.filterEnable}
           />
           <div className='flex-all-client'>
-            <p> DateCardsContainer </p>
-            <button onClick = {()=> this.getDates()}>Get Dates</button>
+            <b>Event log</b>
             <div className="overflow-auto h-100 b1dg">
-              <ul className="list-group">{items}</ul>
+              {this.state.isLoaded
+                ? <ul className="list-group">{items}</ul>
+                : <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              }
             </div>
           </div>
       </div>
@@ -73,6 +67,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
   }
 }
 
+//<button onClick = {()=> this.getDates()}>Get Dates</button>
 /**TODO
  * Виртуальный скролл больших таблиц на React
  * https://www.youtube.com/watch?v=D7EphjNEDI4

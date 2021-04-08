@@ -1,21 +1,30 @@
 import { EventReader } from "../../event-log-reader/controller/event-reader";
 import { waitForUnErrorExecution } from "../../utils";
+//import {observer} from 'mobx-react-lite'; //, action, runInAction
 
 export interface IDateEventsCounters {
   events_counts_cash: Map<string, number>;
   isLoaded: boolean;
 }
 
+interface IonChangeCallback {
+  (props: any): any;
+}
+
 export class TDates {
 
-  private isLoaded: boolean = false;
   private dates: Map<string, IDateEventsCounters> = new Map();
   private LoadTryCount: number = 0;
+  private onChange: IonChangeCallback = ()=>{};
 
   constructor() {
-    this.waitForDates();
+ 
   }
 
+  set OnChange(func: IonChangeCallback) {
+    this.onChange = func;
+  }
+  
   get Dates(): Map<string, IDateEventsCounters> {
     return this.dates;
   }
@@ -32,15 +41,14 @@ export class TDates {
     return res;
   }
 
-  private async waitForDates() {
-    this.isLoaded = false;
+  public async waitForDates() {
     const dates: Array<string> = await waitForUnErrorExecution(this.loadDates.bind(this)) as Array<string>;
     this.dates = this.loadedDatesToMap(dates); 
-    this.isLoaded = true;
+    this.onChange({date: this.dates})
   }
 
 
-  public async loadDates(): Promise<Array<string>> {
+  private async loadDates(): Promise<Array<string>> {
     console.log(`Try to load Dates List: ${this.LoadTryCount++}`)
     try {
       return await EventReader.getDates() as Array<string>;

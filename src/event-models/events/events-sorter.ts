@@ -27,6 +27,17 @@ export class TEventsModel {
     return this.items;
   } 
 
+  public get AvalibleTimeRange(): Array<string> {
+    const res: Set<string> = new Set(
+      this.items.map((item: TEventItem) => {
+        const d = new Date(item.utime).toTimeString();
+        const hhmmss = d.split(' ')[0]
+        return hhmmss;
+      })
+    )
+    return [...res].sort();
+  }
+
   public authorize(): string {
     const client: IEventsModelClient = {
       ID:'gerasim',
