@@ -12,6 +12,21 @@ code {
     monospace;
 }
 
+table {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+  font-size: 14px;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+th, td:first-child {
+  background: #AFCDE7; /*инфо часть таблицы заезжает под заголовок и прячется за ним*/
+  color: white;
+  padding: 10px 20px;
+}
+
+
+
 .modal {
   background-color: rgba(0,0,0,0.5);
   position: fixed;
