@@ -4,8 +4,11 @@ import DateCardsContainer from './event-log-reader/date-cards-container/date-car
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import EventTablePage from './event-table/Pages/Events/event-table-page';
 
+/*TODO следить за картой с датой Now,
+  если появляются новые события - добавлять их, желательно с анимацией
+  чтобы было видно появление новых данных */
 /*TODO в EventTablePage обнаружен баг сортировки времени*/
-/*TODO в DateCardsContainer сделать сортировку по Датам*/
+/*TODO в DateCardsContainer сделать сортировку и фильтрацию по Датам*/
 /*TODO в DateCardsContainer сделать отображение больших списков через окно (да-да! рендер больших списков!) */
 /*TODO в EventTablePage и DateCardsContainer
   При возврате со страницы EventTablePage, надо попадать на туже страницу DateCardsContainer
