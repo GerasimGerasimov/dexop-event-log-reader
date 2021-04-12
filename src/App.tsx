@@ -5,7 +5,6 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import EventTablePage from './event-table/Pages/Events/event-table-page';
 
 /*TODO в EventTablePage обнаружен баг сортировки времени*/
-/*TODO в DateCardsContainer сделать фильтрацию по Датам, использовать только дату (Date Picker) */
 /*TODO в DateCardsContainer сделать сортировку по Датам*/
 /*TODO в DateCardsContainer сделать отображение больших списков через окно (да-да! рендер больших списков!) */
 /*TODO в EventTablePage и DateCardsContainer

@@ -27,8 +27,8 @@ const TenItemsOnPage: number = 10;
 const DaysAgo: number = 60*(24*60*60*1000);
 
 const DefaultRange: ISearchRangeQuery = {
-  dateFrom: new Date().getTime() - DaysAgo,
-  dateTo:   new Date().getTime(),
+  dateFrom: undefined,//new Date().getTime() - DaysAgo,
+  dateTo:   undefined,//new Date().getTime(),
   event:    IEventSortMode.All
 }
 
@@ -64,6 +64,7 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
       showModal: false,
       filterEnable: false
     }
+
   }
 
   private async getEvents() {

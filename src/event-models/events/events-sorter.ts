@@ -115,8 +115,7 @@ export class TEventsModel {
     const {dateFrom, dateTo} = {...query.Range};
     if ((dateFrom !== undefined) && (dateTo !== undefined)) {
       res = source.filter((item)=>{
-        const itemDate: number = new Date(item.date).getTime();
-        return ((itemDate >= dateFrom) && (itemDate <= dateTo))
+        return ((item.utime >= dateFrom) && (item.utime <= dateTo))
       })
     }
     return res; 

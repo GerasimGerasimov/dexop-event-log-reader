@@ -30,8 +30,11 @@ export class TDates {
   }
 
   private loadedDatesToMap(dates: Array<string>): Map<string, IDateEventsCounters> {
-    const res: Map<string, IDateEventsCounters> = new Map()
-    dates.forEach(date => {
+    const res: Map<string, IDateEventsCounters> = new Map();
+
+    dates
+    .sort((a:any, b:any) => { a = new Date(a); b = new Date(b); return b - a})
+    .forEach(date => {
       let value: IDateEventsCounters = {
         events_counts_cash: new Map([['alarm', 0], ['warning', 0], ['info', 0]]),
         isLoaded: false
