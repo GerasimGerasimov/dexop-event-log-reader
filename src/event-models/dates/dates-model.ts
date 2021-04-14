@@ -21,12 +21,13 @@ export class TDates {
   private onChange: IonChangeCallback = ()=>{};
 
   constructor() {
-    WSInformer.init(url, this.onDBatNowIsChanged.bind(this))
+    WSInformer.init(url, this.onDBIsChangedAtNow.bind(this))
   }
 
-  private onDBatNowIsChanged(){
+  private onDBIsChangedAtNow(){
     console.log('onDBatNowIsChanged')
   }
+
   set OnChange(func: IonChangeCallback) {
     this.onChange = func;
   }
@@ -50,7 +51,7 @@ export class TDates {
     return res;
   }
 
-  public async waitForDates() {
+  public async waitForServiceRespond() {
     const dates: Array<string> = await waitForUnErrorExecution(this.loadDates.bind(this)) as Array<string>;
     this.dates = this.loadedDatesToMap(dates); 
     this.onChange({date: this.dates})

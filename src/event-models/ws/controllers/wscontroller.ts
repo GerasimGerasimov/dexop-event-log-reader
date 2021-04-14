@@ -1,6 +1,6 @@
-//import WebSocket = require('ws');
-
-interface handler {({}): any;}
+interface handler {
+    ({}): any;
+}
 
 export default class WSControl {
 

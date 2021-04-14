@@ -1,9 +1,7 @@
 import React, {Component} from "react";
-import { EventReader } from "../controller/event-reader";
 import EventsHeaderMenu from "../header-menu/EventsHeaderMenu";
 import '../Events.css'
 import EventCard from "../event-card/event-card";
-import { TDatesList } from "../../event-models/events";
 import { ModelDates } from "../../event-models/dates/dates-model";
 
 interface IDateCardsContainerProps {
@@ -27,9 +25,9 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
   }
 
   private async getDatesAndEvents() {
-    await ModelDates.waitForDates()
+    await ModelDates.waitForServiceRespond()
     this.setState({
-      cards: [... ModelDates.Dates.keys()] as Array<string>,
+      cards: [...ModelDates.Dates.keys()] as Array<string>,
       isLoaded: true
     })
   }
@@ -41,10 +39,14 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
   private handlerToolMenu(name: string, status: boolean){
   }
 
+  private onChangeDBatNow() {
+
+  }
+
   render(){
     const items = this.state.cards.map((item: string, index: number) => {
       return (
-      <EventCard date={item} key={index} />)
+      <EventCard date={item} key={index} onChangeDBatNow = {this.onChangeDBatNow.bind(this)} />)
     })
 
     return (

@@ -1,3 +1,5 @@
+export type voidCallback = () => void;
+
 export interface IErrorMessage {
     status: string,
     msg: any

@@ -5,9 +5,11 @@ import { sortMapKeyByOrder } from './event-card-helpers';
 import { EEventTypes } from './event-card-types';
 import { EventsCounter } from './event-counters';
 import {NavLink} from 'react-router-dom';
+import { voidCallback } from '../../event-models/ws/types/types';
 
 interface IEventCardProps {
   date: string;
+  onChangeDBatNow: voidCallback | undefined;
 }
 
 interface IEventCardState {
@@ -53,6 +55,11 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
       console.log(e)
     }
     console.log(this.count++)
+  }
+
+  private onChangeDBatNow() {
+    console.log('Должен изменить данные в карточке')
+    //this.getEvents();
   }
 
   componentDidMount(){

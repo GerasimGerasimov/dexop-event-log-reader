@@ -24,11 +24,10 @@ interface IEventsState{
 }
 
 const TenItemsOnPage: number = 10;
-const DaysAgo: number = 60*(24*60*60*1000);
 
 const DefaultRange: ISearchRangeQuery = {
-  dateFrom: undefined,//new Date().getTime() - DaysAgo,
-  dateTo:   undefined,//new Date().getTime(),
+  dateFrom: undefined,
+  dateTo:   undefined,
   event:    IEventSortMode.All
 }
 
@@ -37,7 +36,7 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
   private events_date: string = ''
 
   constructor({match} : RouteComponentProps<IEventsProps>) {
-    super( match as any);
+    super( {match} as RouteComponentProps<IEventsProps>);
 
     this.events_date = match.params.date;
 
