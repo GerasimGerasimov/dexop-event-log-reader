@@ -1,6 +1,9 @@
 import { EventReader } from "../../event-log-reader/controller/event-reader";
 import { waitForUnErrorExecution } from "../../utils";
-//import {observer} from 'mobx-react-lite'; //, action, runInAction
+import { WSInformer } from "../ws/client";
+
+/**TODO найти способ убрать хард-код */
+const url = 'ws://localhost:5007' 
 
 export interface IDateEventsCounters {
   events_counts_cash: Map<string, number>;
@@ -18,9 +21,12 @@ export class TDates {
   private onChange: IonChangeCallback = ()=>{};
 
   constructor() {
- 
+    WSInformer.init(url, this.onDBatNowIsChanged.bind(this))
   }
 
+  private onDBatNowIsChanged(){
+    console.log('onDBatNowIsChanged')
+  }
   set OnChange(func: IonChangeCallback) {
     this.onChange = func;
   }
