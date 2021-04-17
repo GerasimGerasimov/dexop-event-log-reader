@@ -5,7 +5,6 @@ import { sortMapKeyByOrder } from './event-card-helpers';
 import { EEventTypes } from './event-card-types';
 import { EventsCounter } from './event-counters';
 import {NavLink} from 'react-router-dom';
-import { voidCallback } from '../../event-models/ws/types/types';
 import { IonChangeCallback, ModelDates } from '../../event-models/dates/dates-model';
 import { toDateLocal } from '../../event-table/helpers/timeutils';
 

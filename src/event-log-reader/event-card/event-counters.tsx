@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { EEventTypes } from './event-card-types';
+import EventCounter from './event-counter';
 
 
 interface IEventsCountersProps {
@@ -39,12 +40,7 @@ export class EventsCounter extends Component<IEventsCountersProps, IEventsCounte
   render () {
     const items = Array.from(this.props.events).map((item) => {
       return (
-        <div className='d-inline badge badge-pill badge-primary mr-1'
-          key = {`${item[0]}-${item[1]}`}
-          >
-          {this.getIconElement(item[0])}
-          <span className="pl-1">{item[1]}</span>
-        </div>
+        <EventCounter icon = {this.getIconElement(item[0])} value = {item[1]} key = {`${item[0]}-${item[1]}`}/>
       )
     })
 
