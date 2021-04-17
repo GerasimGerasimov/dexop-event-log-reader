@@ -67,7 +67,6 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
   }
 
   private onChangeDBatNow(props: any) {
-    console.log('Должен изменить данные в карточке')
     this.getEvents();
   }
 
@@ -108,5 +107,3 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
     )
   }
 }
-//Пример спиннера при загрузке
-//https://itchief.ru/examples/lab.php?topic=bootstrap&file=b4-border-spinner-in-button

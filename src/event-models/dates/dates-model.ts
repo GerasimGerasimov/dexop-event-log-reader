@@ -45,7 +45,6 @@ export class TDates {
   }
 
   private onDBIsChangedAtNow(){
-    console.log('onDBatNowIsChanged')
     this.notifySubscribers()
   }
 
