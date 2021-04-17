@@ -10,7 +10,7 @@ export interface IDateEventsCounters {
   isLoaded: boolean;
 }
 
-interface IonChangeCallback {
+export interface IonChangeCallback {
   (props: any): any;
 }
 
@@ -19,19 +19,36 @@ export class TDates {
   private dates: Map<string, IDateEventsCounters> = new Map();
   private LoadTryCount: number = 0;
   private onChange: IonChangeCallback = ()=>{};
+  private subscribers: Set<IonChangeCallback> = new Set();
 
   constructor() {
+   
+  }
+
+  public init() {
     WSInformer.init(url, this.onDBIsChangedAtNow.bind(this))
+  }
+
+  public set Subscribe(func: IonChangeCallback) {
+    console.log('Subscribed');
+    this.subscribers.add(func)
+  }
+
+  public unSubscribe(func: IonChangeCallback) {
+    console.log('unSubscribed:',this.subscribers.delete(func));
+  }
+
+  private notifySubscribers() {
+    this.subscribers.forEach( func => {
+      func('notifySubscribers')
+    })
   }
 
   private onDBIsChangedAtNow(){
     console.log('onDBatNowIsChanged')
+    this.notifySubscribers()
   }
 
-  set OnChange(func: IonChangeCallback) {
-    this.onChange = func;
-  }
-  
   get Dates(): Map<string, IDateEventsCounters> {
     return this.dates;
   }

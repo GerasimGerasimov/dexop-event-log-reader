@@ -1,4 +1,16 @@
-export function toDatetimeLocal(date: Date): string {
+export function toDateLocal(date: Date): string {
+  var res: string = '';
+  const ten = (i:number) => (i < 10 ? '0' : '') + i;
+  const d = {
+    YYYY: date.getFullYear(),
+    MM:   ten(date.getMonth() + 1),
+    DD:   ten(date.getDate()),
+  }
+  res = `${d.YYYY}-${d.MM}-${d.DD}`
+  return res;
+}
+
+export function toDateTimeLocal(date: Date): string {
   var
     ten = function (i:number) {
       return (i < 10 ? '0' : '') + i;
@@ -14,10 +26,10 @@ export function toDatetimeLocal(date: Date): string {
            HH + ':' + II + ':' + SS;
 };
 
-export function getLocalDateFormValue(value: number | undefined): string {
+export function getLocalDateTimeFormValue(value: number | undefined): string {
   const dateFrom = value || new Date();
   const date = new Date(dateFrom);
-  return toDatetimeLocal(date);
+  return toDateTimeLocal(date);
 }
 
 export function getMinTimeFromRange(timeRange: Array<string>): string {

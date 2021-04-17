@@ -39,14 +39,10 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
   private handlerToolMenu(name: string, status: boolean){
   }
 
-  private onChangeDBatNow() {
-
-  }
-
   render(){
     const items = this.state.cards.map((item: string, index: number) => {
       return (
-      <EventCard date={item} key={index} onChangeDBatNow = {this.onChangeDBatNow.bind(this)} />)
+      <EventCard date={item} key={index} />)
     })
 
     return (

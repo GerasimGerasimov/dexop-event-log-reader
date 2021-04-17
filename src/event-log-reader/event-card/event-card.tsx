@@ -6,10 +6,11 @@ import { EEventTypes } from './event-card-types';
 import { EventsCounter } from './event-counters';
 import {NavLink} from 'react-router-dom';
 import { voidCallback } from '../../event-models/ws/types/types';
+import { IonChangeCallback, ModelDates } from '../../event-models/dates/dates-model';
+import { toDateLocal } from '../../event-table/helpers/timeutils';
 
 interface IEventCardProps {
   date: string;
-  onChangeDBatNow: voidCallback | undefined;
 }
 
 interface IEventCardState {
@@ -20,6 +21,7 @@ interface IEventCardState {
 export default class EventCard extends Component<IEventCardProps, IEventCardState> {
 
   private count: number = 0;
+  private callback: IonChangeCallback;
 
   constructor(props: IEventCardProps) {
     super(props)
@@ -27,6 +29,14 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
       events: new Map([['alarm', 0], ['warning', 0], ['info', 0]]),
       isLoaded: false
     }
+    this.callback = this.onChangeDBatNow.bind(this);
+  }
+
+  private isNowDate(): boolean { //2021-02-28  YYYY-MM-DD
+    let res: boolean = false;
+    const NowDate: string = toDateLocal(new Date());
+    res = (this.props.date === NowDate)
+    return res;
   }
 
   private getEventTypesCount(events: TEventItems): Map<string, number>{
@@ -57,14 +67,24 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
     console.log(this.count++)
   }
 
-  private onChangeDBatNow() {
+  private onChangeDBatNow(props: any) {
     console.log('Должен изменить данные в карточке')
-    //this.getEvents();
+    this.getEvents();
   }
 
-  componentDidMount(){
-    console.log(this.props.date);
+  componentDidMount() {
     this.getEvents();
+  }
+
+  componentDidUpdate(){
+    console.log(this.props.date);
+    if (this.isNowDate()) {
+      ModelDates.Subscribe = this.callback;
+    }
+  }
+
+  componentWillUnmount() {
+    ModelDates.unSubscribe(this.callback);
   }
 
   render() {
