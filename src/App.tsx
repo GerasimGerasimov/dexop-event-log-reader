@@ -5,6 +5,10 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import EventTablePage from './event-table/Pages/Events/event-table-page';
 import { ModelDates } from './event-models/dates/dates-model';
 
+/**TODO в этой ветке, всю работу с данными выношу в ModelDates
+ * все остальные компоненты обеспечивают только представление данных
+ */
+
 /*TODO следить за картой с датой Now,
   если появляются новые события - добавлять их, желательно с анимацией
   чтобы было видно появление новых данных */
