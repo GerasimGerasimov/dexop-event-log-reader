@@ -6,11 +6,12 @@ import FilterSettings from "../../Forms/FilterSettings/FilterSettings";
 import Paginator from "./components/paginator/paginator";
 import './event-table-page.css'
 import EventsHeaderMenu from "./menu/EventsHeaderMenu";
-import { IEventQueryDirection, IEventSortMode, IEventsQuery, IEventsRespond, ISearchRangeQuery, ISortDirection } from "../../../event-models/events/sort-modes";
+import { IEventSortMode, IEventsQuery, IEventsRespond, ISearchRangeQuery} from "../../../event-models/events/sort-modes";
 import { TEventItems } from "../../../event-models/events";
 import { TEventsModel } from "../../../event-models/events/events-sorter";
 import { EventReader } from "../../../event-log-reader/controller/event-reader";
 import { RouteComponentProps } from "react-router-dom";
+import { IQueryDirection, ISortDirection } from "../../../event-models/sort-conditions";
 
 interface IEventsProps {
   date: string;
@@ -87,17 +88,17 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
     }
   }
 
-  private getNextIndex(direction: IEventQueryDirection): number {
+  private getNextIndex(direction: IQueryDirection): number {
     let nextIndex: number = this.state.query.FromIndex;
     switch (direction) {
-      case IEventQueryDirection.Next:
+      case IQueryDirection.Next:
         nextIndex  += this.state.query.QueriedQuantity;//ItemsOnPage;
         const max: number = (this.state.respond.TotalItemsQuantity === 0)
                             ? 0
                             : this.state.respond.TotalItemsQuantity - 1;
         nextIndex = (nextIndex > max)? max : nextIndex;
         break;
-      case IEventQueryDirection.Prev:
+      case IQueryDirection.Prev:
         nextIndex  -= this.state.query.QueriedQuantity;//ItemsOnPage;
         nextIndex = (nextIndex < 0)? 0 : nextIndex;
         break;
@@ -105,12 +106,12 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
     return nextIndex;
   }
 
-  private isNextPossible(direction: IEventQueryDirection): boolean {
-    return !((direction === IEventQueryDirection.Next)
+  private isNextPossible(direction: IQueryDirection): boolean {
+    return !((direction === IQueryDirection.Next)
            && (this.state.respond.ItemsAfter === 0))
   }
 
-  private readPortionOfItems(direction: IEventQueryDirection) {
+  private readPortionOfItems(direction: IQueryDirection) {
     this.setState((state)=>({
       query:{
         ...state.query,
@@ -119,7 +120,7 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
     }), ()=>this.getData())
   }
   
-  private getPortionOfItems(direction: IEventQueryDirection) {
+  private getPortionOfItems(direction: IQueryDirection) {
     if (this.isNextPossible(direction)) {
       this.readPortionOfItems(direction)
     }
@@ -278,7 +279,7 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
               nextItemsHandler = {this.getPortionOfItems.bind(this)}
               setNumberOfItemsOnPageHandler = {this.setNumberOfItemsOnPage.bind(this)}
             />
-        </div>
+          </div>
         {modal}
       </>
     );

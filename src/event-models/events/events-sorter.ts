@@ -1,5 +1,6 @@
 import { TEventItem } from "../events";
-import {IEventSortMode, IEventsQuery, IEventsRespond, IEventsSortMode, ISortDirection } from "./sort-modes";
+import { ISortDirection } from "../sort-conditions";
+import {IEventSortMode, IEventsQuery, IEventsRespond, IEventsSortMode} from "./sort-modes";
 
 export const count = 10;
 
@@ -9,14 +10,8 @@ const sequences = {
   [IEventSortMode.Info]:    [IEventSortMode.Info,    IEventSortMode.Warning, IEventSortMode.Alarm]
 }
 
-interface IEventsModelClient {
-  ID: string;
-  SortMode: IEventsSortMode;//как были отсортировваны данные
-  Position: number;
-}
-
 export class TEventsModel {
-  private Clients: Map<string, IEventsModelClient> = new Map();
+
   private items: Array<TEventItem> = [];
   
   constructor(items: Array<TEventItem>){
@@ -36,19 +31,6 @@ export class TEventsModel {
       })
     )
     return [...res].sort();
-  }
-
-  public authorize(): string {
-    const client: IEventsModelClient = {
-      ID:'gerasim',
-      SortMode: {
-        DateTimeSortDirection: ISortDirection.Up,
-        EventsSortMode: IEventSortMode.Alarm
-      },
-      Position: 0
-    }
-    this.Clients.set(client.ID, client);
-    return client.ID
   }
 
   private defaultEventRespond(): IEventsRespond {

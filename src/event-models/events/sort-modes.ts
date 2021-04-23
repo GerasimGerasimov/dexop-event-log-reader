@@ -1,8 +1,7 @@
 import { TEventItem } from "../events";
+import { IQueryDirection, ISearchDateRangeQuery, ISortDirection } from "../sort-conditions";
 
-export interface ISearchRangeQuery {
-  dateFrom?: number;
-  dateTo?: number;
+export interface ISearchRangeQuery extends ISearchDateRangeQuery {
   event?: IEventSortMode;
 }
 
@@ -11,16 +10,6 @@ export enum IEventSortMode {
   Alarm   = 'alarm',
   Warning = 'warning',
   Info    = 'info'
-}
-
-export enum IEventQueryDirection {
-  Prev,
-  Next
-}
-
-export enum ISortDirection {
-  Up,
-  Down
 }
 
 export interface IEventsSortMode {
@@ -33,7 +22,7 @@ export interface IEventsQuery {
   SortMode: IEventsSortMode;//как сортировать данные для этого клиента
   FromIndex: number;
   QueriedQuantity: number;
-  Direction?: IEventQueryDirection;
+  Direction?: IQueryDirection;
   Range?: ISearchRangeQuery;
 }
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { IEventQueryDirection } from "../../../../../event-models/events/sort-modes";
+import { IQueryDirection } from "../../../../../event-models/sort-conditions";
 
 import './paginator.css'
 
@@ -68,11 +68,11 @@ export default class Paginator extends Component <IPaginatorProps,IPaginatorStat
         <button
           className="btn btn-primary btn-xs"
           disabled={this.isDisabled(this.props.ItemsBefore)}
-          onClick={()=>this.props.nextItemsHandler(IEventQueryDirection.Prev)}>Pred</button>
+          onClick={()=>this.props.nextItemsHandler(IQueryDirection.Prev)}>Pred</button>
         <button
           className="btn btn-primary btn-xs"
           disabled={this.isDisabled(this.props.ItemsAfter)}
-          onClick={()=>this.props.nextItemsHandler(IEventQueryDirection.Next)}>Next</button>
+          onClick={()=>this.props.nextItemsHandler(IQueryDirection.Next)}>Next</button>
         <span>{this.props.ItemsAfter}</span>
         <button
           className="btn btn-secondary btn-xs"
