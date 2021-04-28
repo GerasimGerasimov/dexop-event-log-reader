@@ -133,9 +133,9 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
   }
 
   render(){
-    const items = this.state.respond.Items.map((item: string, index: number) => {
+    const items = this.state.respond.Items.map((item: string) => {
       return (
-      <EventCard date={item} key={index} />)
+      <EventCard date={item} key={item} />)
     })
 
     return (
