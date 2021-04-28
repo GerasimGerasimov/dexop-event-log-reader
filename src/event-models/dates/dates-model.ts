@@ -18,8 +18,9 @@ export class TDates {
 
   private dates: Map<string, IDateEventsCounters> = new Map();
   private LoadTryCount: number = 0;
-  private onLoaded: IonChangeCallback = ()=>{};
+  private onLoaded: IonChangeCallback = (payload:any)=>{};
   private subscribers: Set<IonChangeCallback> = new Set();
+  private isLoaded: boolean = false;
 
   constructor() {
    
@@ -28,6 +29,10 @@ export class TDates {
   public init() {
     WSInformer.init(url, this.onDBIsChangedAtNow.bind(this))
     this.waitForServiceRespond();
+  }
+
+  get isDataLoaded(): boolean {
+    return this.isLoaded;
   }
 
   public set dataLoadedCallBack(func: IonChangeCallback) {
@@ -73,9 +78,11 @@ export class TDates {
   }
 
   public async waitForServiceRespond() {
+    this.isLoaded = false;
     const dates: Array<string> = await waitForUnErrorExecution(this.loadDates.bind(this)) as Array<string>;
-    this.dates = this.loadedDatesToMap(dates); 
-    this.onLoaded({date: this.dates})
+    this.dates = this.loadedDatesToMap(dates);
+    this.isLoaded = true;
+    this.onLoaded({dates: this.dates})
   }
 
 

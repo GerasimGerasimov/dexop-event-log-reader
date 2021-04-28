@@ -20,11 +20,18 @@ interface IDateCardsContainerState {
   filterEnable: boolean;
 }
 
-const TenItemsOnPage: number = 10;
+const ItemsOnPage: number = 5;
 
 const DefaultRange: ISearchDateRangeQuery = {
   dateFrom: undefined,
   dateTo:   undefined,
+}
+
+const DefaultQuery:IDatesQuery = {
+  FromIndex: 0,
+  QueriedQuantity: ItemsOnPage,
+  SortMode: ISortDirection.Down,
+  Range: {...DefaultRange}
 }
 
 export default class DateCardsContainer extends Component <IDateCardsContainerProps, IDateCardsContainerState> {
@@ -39,19 +46,8 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
       filterEnable: false,
       isLoaded: true, //false,
       showModal: false,
-      query: {
-        FromIndex: 0,
-        QueriedQuantity: 10,
-        SortMode: ISortDirection.Up,
-        Range: {...DefaultRange}
-      },
-      respond: {
-        TotalItemsQuantity: 0,
-        ItemsBefore: 0,
-        ItemsAfter: 0,
-        ItemsInRespond: 0,
-        Items: [],
-      }
+      query: {...DefaultQuery}, 
+      respond: {...this.Model.getItems(DefaultQuery)},
     }
   }
 
@@ -68,6 +64,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
   private onLoaded(datas: any) {
     console.log('onLoaded')
     /**TODO обеспечить заполнение state!*/
+    this.getData();
   }
 
   componentDidMount() {
@@ -104,7 +101,10 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
   private getData(){
     if (this.Model) {
       const respond:IDatesRespond = this.Model.getItems(this.state.query);
-      this.setState({respond})
+      this.setState({
+        respond,
+        isLoaded: this.Model.isLoaded,
+      })
     }
   }
 
@@ -145,7 +145,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
             isTougle = {this.state.filterEnable}
           />
         <div className='flex-all-client'>
-          <b>Event log {this.state.respond.Items}</b>
+          <b>Event log</b>
           <div className="overflow-auto h-100 b1dg">
             {this.state.isLoaded
               ? <ul className="list-group">{items}</ul>
@@ -156,7 +156,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
         <Paginator
           ItemsAfter = {this.state.respond.ItemsAfter}
           ItemsBefore = {this.state.respond.ItemsBefore}
-          ItemsPortion = {TenItemsOnPage}
+          ItemsPortion = {ItemsOnPage}
           QueriedQuantity = {this.state.query.QueriedQuantity}
           nextItemsHandler = {this.getPortionOfItems.bind(this)}
           setNumberOfItemsOnPageHandler = {this.setNumberOfItemsOnPage.bind(this)}

@@ -26,6 +26,10 @@ export class TDatesQuery {
     this.source = soure;
   }
 
+  get isLoaded(): boolean {
+    return this.source.isDataLoaded;
+  }
+
   private defaultEventRespond(): IDatesRespond {
     return {
       TotalItemsQuantity: this.source.Dates.size,
