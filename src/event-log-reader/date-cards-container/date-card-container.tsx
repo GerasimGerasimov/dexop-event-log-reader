@@ -67,6 +67,8 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
   }
 
   componentDidMount() {
+    //Результат борьбы с
+    //Warning: Can't perform a React state update on an unmounted component. 
     this.Model = new TDatesQuery(ModelDates);
     ModelDates.dataLoadedCallBack = this.onLoaded.bind(this);
     this.Model.onDataAddedCallBack = this.onDataAddedToDataBaseHandler.bind(this);
