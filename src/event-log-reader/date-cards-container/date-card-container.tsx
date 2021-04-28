@@ -35,41 +35,49 @@ const DefaultQuery:IDatesQuery = {
 }
 
 export default class DateCardsContainer extends Component <IDateCardsContainerProps, IDateCardsContainerState> {
-  private Model: TDatesQuery;
+  private Model: TDatesQuery | undefined;
   
   constructor(props: IDateCardsContainerProps) {
     super(props);
-    this.Model = new TDatesQuery(ModelDates);
-    ModelDates.dataLoadedCallBack = this.onLoaded.bind(this);
     this.state = {
       cards:[],
       filterEnable: false,
-      isLoaded: true, //false,
+      isLoaded: false,
       showModal: false,
       query: {...DefaultQuery}, 
-      respond: {...this.Model.getItems(DefaultQuery)},
+      respond: {
+        TotalItemsQuantity: 0,
+        ItemsBefore: 0,
+        ItemsAfter: 0,
+        ItemsInRespond: 0,
+        SortMode: ISortDirection.Down,
+        Items: []
+      },
     }
   }
 
-  /*
-  private async getDatesAndEvents() {
-    await ModelDates.waitForServiceRespond()
-    this.setState({
-      cards: [...ModelDates.Dates.keys()] as Array<string>,
-      isLoaded: true
-    })
+  private onDataAddedToDataBaseHandler(props: any) {
+    console.log(`data-card-container.onChangeDBatNow: ${props}`);
+    this.getData();
   }
-  */
 
   private onLoaded(datas: any) {
-    console.log('onLoaded')
-    /**TODO обеспечить заполнение state!*/
+    console.log('onLoaded');
     this.getData();
   }
 
   componentDidMount() {
-    //this.getDatesAndEvents();
-    this.getData();
+    this.Model = new TDatesQuery(ModelDates);
+    ModelDates.dataLoadedCallBack = this.onLoaded.bind(this);
+    this.Model.onDataAddedCallBack = this.onDataAddedToDataBaseHandler.bind(this);
+    this.setState ({
+        respond: {...this.Model.getItems(DefaultQuery)}
+    })
+     this.getData();
+  }
+
+  componentWillUnmount() {
+    this.Model!.destructor();
   }
 
   private handlerToolMenu(name: string, status: boolean){

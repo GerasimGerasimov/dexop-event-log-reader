@@ -35,6 +35,15 @@ export class TDates {
     return this.isLoaded;
   }
 
+  public pushData(data: string): boolean {
+    if (this.dates.has(data)) { return false};
+    this.dates.set(data, {
+        events_counts_cash: new Map([['alarm', 0], ['warning', 0], ['info', 0]]),
+        isLoaded: false
+      });
+    return true
+  }
+
   public set dataLoadedCallBack(func: IonChangeCallback) {
     this.onLoaded = func;
   }
@@ -54,8 +63,12 @@ export class TDates {
     })
   }
 
-  private onDBIsChangedAtNow(){
-    this.notifySubscribers()
+  //"cmd":"dbchanged"
+  private onDBIsChangedAtNow(msg: {cmd: string, payload: string}){
+    const cmd: string = msg.cmd || '';
+    if (cmd === "dbchanged") {
+      this.notifySubscribers()
+    }
   }
 
   get Dates(): Map<string, IDateEventsCounters> {

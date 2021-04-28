@@ -3,17 +3,18 @@ import './App.css';
 import DateCardsContainer from './event-log-reader/date-cards-container/date-card-container';
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import EventTablePage from './event-table/Pages/Events/event-table-page';
-/**TODO в этой ветке, всю работу с данными выношу в ModelDates
- * все остальные компоненты обеспечивают только представление данных
+
+
+
+/**TODO
+ * 
+найти и побороть
+unSubscribed: false
+src/event-models/dates/dates-model.ts:57
+Warning: Can't perform a React state update on an unmounted component. 
+ * 
+ * 
  */
-/**TODO date-card-container.tsx надо чтоб начал рабоать после переноса в  ModelDates
- * сейчас крутится спинер, но карточки не появляются
-*/
-
-
-/*TODO следить за картой с датой Now,
-  если появляются новые события - добавлять их, желательно с анимацией
-  чтобы было видно появление новых данных */
 /*TODO в EventTablePage обнаружен баг сортировки времени*/
 /*TODO в DateCardsContainer сделать сортировку и фильтрацию по Датам*/
 /*TODO в DateCardsContainer сделать отображение больших списков через окно (да-да! рендер больших списков!) */

@@ -1,5 +1,6 @@
+import { toDateLocal } from "../../event-table/helpers/timeutils";
 import { IQueryDirection, ISearchDateRangeQuery, ISortDirection } from "../sort-conditions";
-import { TDates } from "./dates-model";
+import { IonChangeCallback, TDates } from "./dates-model";
 
 export interface IDatesQuery {
   FromIndex: number;
@@ -21,13 +22,35 @@ export interface IDatesRespond {
 
 export class TDatesQuery {
   private source: TDates;
+  private onDataAddedToDataBase: IonChangeCallback;
+  private onDataAdded: IonChangeCallback = (payload:any)=>{};
   
   constructor(soure: TDates) {
     this.source = soure;
+    this.onDataAddedToDataBase = this.onDataAddedToDataBaseHandler.bind(this);
+    this.source.Subscribe = this.onDataAddedToDataBase;
   }
 
+  destructor() {
+    this.source.unSubscribe(this.onDataAddedToDataBase)
+  }
+
+  set onDataAddedCallBack(func: IonChangeCallback) {
+    this.onDataAdded = func;
+  }
+  
   get isLoaded(): boolean {
     return this.source.isDataLoaded;
+  }
+
+  private onDataAddedToDataBaseHandler(props: any) {
+    console.log('TDatesQuery onChangeDBatNow');
+    //как минимум добавилась новая дата.
+    const NowDate: string = toDateLocal(new Date());
+    if (this.source.pushData(NowDate)) {
+      this.onDataAdded({NowDate})
+    }
+
   }
 
   private defaultEventRespond(): IDatesRespond {
