@@ -34,6 +34,8 @@ const DefaultRange: ISearchRangeQuery = {
   event:    IEventSortMode.All
 }
 
+/**TODO сделать анимацию на появляющихся элементах */
+
 export default class EventTablePage extends Component <RouteComponentProps<IEventsProps>,IEventsState> {
   private EventsModel: TEventsModel | undefined;
   private events_date: string = '';
@@ -50,7 +52,7 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
         FromIndex:0,
         QueriedQuantity: 10,
         SortMode: {
-          DateTimeSortDirection: ISortDirection.Up,
+          DateTimeSortDirection: ISortDirection.Down,
           EventsSortMode:  IEventSortMode.All
         },
         Range:{...DefaultRange}

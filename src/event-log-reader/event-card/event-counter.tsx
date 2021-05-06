@@ -20,10 +20,6 @@ export default class EventCounter extends Component<IEventCounterProps, IEventCo
     }
   }
 
-  private onTransitionEndHandler() {
-    console.log('onTransitionEndHandler')
-  }
-
   componentDidMount() {
     setTimeout(()=>{
       this.setState({isUpdate:false});
@@ -35,9 +31,7 @@ export default class EventCounter extends Component<IEventCounterProps, IEventCo
     className += this.state.isUpdate ?' shadow-on-phase' : ' shadow-off-phase';
 
     return (
-      <div
-        className={className}
-        onTransitionEnd = {()=>this.onTransitionEndHandler()}>
+      <div className={className}>
         {this.props.icon}
         <span className="pl-1 ">{this.props.value}</span>
       </div>

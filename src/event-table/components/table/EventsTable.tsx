@@ -33,6 +33,11 @@ export default class EventsTable extends Component<IEventTableProps ,IEventsTabl
     return res;
   }
 
+
+  componentDidMount() {
+    console.log('EventsTable DidMount')
+  }
+
   render () {
     return (
       <div className='events-wrapper'>
@@ -57,9 +62,9 @@ export default class EventsTable extends Component<IEventTableProps ,IEventsTabl
                   const {tag, date, details, type} = {...item};
                   const {comment} = {...this.parseDetails(details)}//{initialValue, comment, todo}
                   return (
-                    <tr key={index}>
+                    <tr key={index} className='tr-shadow-on'>
                       <td align="left">{this.getFormatedDateTime(date)}</td>
-                      <td className='center'><Markers type={type}/></td>
+                      <td className='center '><Markers type={type}/></td>
                       <td width="100%" align="left">{comment}</td>
                       <td align="left">{tag}</td>
                     </tr>
