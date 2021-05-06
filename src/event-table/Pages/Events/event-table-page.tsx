@@ -12,6 +12,8 @@ import { TEventsModel } from "../../../event-models/events/events-sorter";
 import { EventReader } from "../../../event-log-reader/controller/event-reader";
 import { RouteComponentProps } from "react-router-dom";
 import { IQueryDirection, ISortDirection } from "../../../event-models/sort-conditions";
+import { IonChangeCallback, ModelDates } from "../../../event-models/dates/dates-model";
+import { isNowDate } from "../../helpers/timeutils";
 
 interface IEventsProps {
   date: string;
@@ -34,7 +36,8 @@ const DefaultRange: ISearchRangeQuery = {
 
 export default class EventTablePage extends Component <RouteComponentProps<IEventsProps>,IEventsState> {
   private EventsModel: TEventsModel | undefined;
-  private events_date: string = ''
+  private events_date: string = '';
+  private callback: IonChangeCallback | undefined;
 
   constructor({match} : RouteComponentProps<IEventsProps>) {
     super( {match} as RouteComponentProps<IEventsProps>);
@@ -77,11 +80,26 @@ export default class EventTablePage extends Component <RouteComponentProps<IEven
     }
   }
 
+  private onChangeDBatNow(props: any) {
+    this.getEvents();
+  }
+  
   componentDidMount(){
+    console.log(this.events_date);
+    if (isNowDate(this.events_date)) {
+      this.callback = this.onChangeDBatNow.bind(this);
+      ModelDates.Subscribe = {func: this.callback, from:'event-table-page.tsx EventTablePage DidMount'};
+    }    
     this.getEvents();
   }
 
-  getData(){
+  componentWillUnmount() {
+    if (this.callback) {
+      ModelDates.unSubscribe(this.callback, 'event-table-page.tsx EventTablePage willUnmount');
+    };
+  }
+
+  private getData(){
     if (this.EventsModel) {
       const respond:IEventsRespond = this.EventsModel.getItems(this.state.query);
       this.setState({respond})

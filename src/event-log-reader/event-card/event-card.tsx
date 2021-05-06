@@ -6,7 +6,7 @@ import { EEventTypes } from './event-card-types';
 import { EventsCounter } from './event-counters';
 import {NavLink} from 'react-router-dom';
 import { IonChangeCallback, ModelDates } from '../../event-models/dates/dates-model';
-import { toDateLocal } from '../../event-table/helpers/timeutils';
+import { isNowDate } from '../../event-table/helpers/timeutils';
 
 interface IEventCardProps {
   date: string;
@@ -28,13 +28,6 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
       events: new Map([['alarm', 0], ['warning', 0], ['info', 0]]),
       isLoaded: false
     };
-  }
-
-  private isNowDate(): boolean { //2021-02-28  YYYY-MM-DD
-    let res: boolean = false;
-    const NowDate: string = toDateLocal(new Date());
-    res = (this.props.date === NowDate)
-    return res;
   }
 
   private getEventTypesCount(events: TEventItems): Map<string, number>{
@@ -71,7 +64,7 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
 
   componentDidMount() {
     console.log(this.props.date);
-    if (this.isNowDate()) {
+    if (isNowDate(this.props.date)) {
       this.callback = this.onChangeDBatNow.bind(this);
       ModelDates.Subscribe = {func: this.callback, from:'event-card EventCard DidMount'};
     }

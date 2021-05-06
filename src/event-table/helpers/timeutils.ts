@@ -1,3 +1,7 @@
+export function isNowDate(date: string): boolean { //2021-02-28  YYYY-MM-DD
+  return (date === toDateLocal(new Date()));
+}
+
 export function toDateLocal(date: Date): string {
   var res: string = '';
   const ten = (i:number) => (i < 10 ? '0' : '') + i;
