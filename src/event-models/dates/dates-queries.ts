@@ -28,11 +28,14 @@ export class TDatesQuery {
   constructor(soure: TDates) {
     this.source = soure;
     this.onDataAddedToDataBase = this.onDataAddedToDataBaseHandler.bind(this);
-    this.source.Subscribe = this.onDataAddedToDataBase;
+    this.source.Subscribe = {
+      func:this.onDataAddedToDataBase,
+      from:'dates-queries.ts TDatesQuery constructor '
+    };
   }
 
   destructor() {
-    this.source.unSubscribe(this.onDataAddedToDataBase)
+    this.source.unSubscribe(this.onDataAddedToDataBase, 'dates-queries.ts TDatesQuery destructor')
   }
 
   set onDataAddedCallBack(func: IonChangeCallback) {

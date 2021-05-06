@@ -6,15 +6,6 @@ import EventTablePage from './event-table/Pages/Events/event-table-page';
 
 
 
-/**TODO
- * 
-найти и побороть
-unSubscribed: false
-src/event-models/dates/dates-model.ts:57
-Warning: Can't perform a React state update on an unmounted component. 
- * 
- * 
- */
 /*TODO в EventTablePage обнаружен баг сортировки времени*/
 /*TODO в DateCardsContainer сделать сортировку и фильтрацию по Датам*/
 /*TODO в DateCardsContainer сделать отображение больших списков через окно (да-да! рендер больших списков!) */

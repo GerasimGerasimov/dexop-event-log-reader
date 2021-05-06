@@ -48,13 +48,13 @@ export class TDates {
     this.onLoaded = func;
   }
 
-  public set Subscribe(func: IonChangeCallback) {
-    console.log('Subscribed');
-    this.subscribers.add(func)
+  public set Subscribe(props: {func: IonChangeCallback, from: string}) {
+    console.log(`Subscribed from ${props.from}`);
+    this.subscribers.add(props.func)
   }
 
-  public unSubscribe(func: IonChangeCallback) {
-    console.log('unSubscribed:',this.subscribers.delete(func));
+  public unSubscribe(func: IonChangeCallback, from: string) {
+    console.log(`unSubscribed: ${from}`,this.subscribers.delete(func));
   }
 
   private notifySubscribers() {

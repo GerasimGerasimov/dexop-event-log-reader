@@ -20,15 +20,14 @@ interface IEventCardState {
 export default class EventCard extends Component<IEventCardProps, IEventCardState> {
 
   private count: number = 0;
-  private callback: IonChangeCallback;
+  private callback: IonChangeCallback | undefined;
 
   constructor(props: IEventCardProps) {
     super(props)
     this.state = {
       events: new Map([['alarm', 0], ['warning', 0], ['info', 0]]),
       isLoaded: false
-    }
-    this.callback = this.onChangeDBatNow.bind(this);
+    };
   }
 
   private isNowDate(): boolean { //2021-02-28  YYYY-MM-DD
@@ -71,18 +70,21 @@ export default class EventCard extends Component<IEventCardProps, IEventCardStat
   }
 
   componentDidMount() {
+    console.log(this.props.date);
+    if (this.isNowDate()) {
+      this.callback = this.onChangeDBatNow.bind(this);
+      ModelDates.Subscribe = {func: this.callback, from:'event-card EventCard DidMount'};
+    }
     this.getEvents();
   }
 
   componentDidUpdate(){
-    console.log(this.props.date);
-    if (this.isNowDate()) {
-      ModelDates.Subscribe = this.callback;
-    }
   }
 
   componentWillUnmount() {
-    ModelDates.unSubscribe(this.callback);
+    if (this.callback) {
+      ModelDates.unSubscribe(this.callback, 'EventCard event-card.tsx willUnmount');
+    };
   }
 
   render() {
