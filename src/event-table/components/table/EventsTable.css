@@ -64,3 +64,17 @@ table.events thead th {
   box-shadow: none;
   transition: box-shadow 0.25s ease;
 }
+
+@keyframes event-table-new-string-apear {
+  0% {
+    transform: scale(1, 0);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+.event-table-new {
+  transform-origin: top;
+  animation: event-table-new-string-apear 1350ms ease;
+}

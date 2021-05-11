@@ -18,6 +18,8 @@ interface IEventsTableState {
 
 export default class EventsTable extends Component<IEventTableProps ,IEventsTableState> {
 
+  private items: Array<TEventItem> = [];
+
   private getFormatedDateTime(datetime: string): string {
     const time = new Date(datetime).toLocaleTimeString();
     return time;
@@ -36,6 +38,21 @@ export default class EventsTable extends Component<IEventTableProps ,IEventsTabl
 
   componentDidMount() {
     console.log('EventsTable DidMount')
+  }
+
+  componentDidUpdate() {
+    this.items = [...this.props.items];
+  }
+
+  private isNew(value: number): boolean { //utime
+    return this.items.every((item)=>item.utime !== value)
+  }
+
+  private setClasses(value: number): string {
+    let res = "";
+    res += this.isNew(value) ? "event-table-new" : "";
+    console.log(res);
+    return res;
   }
 
   render () {
@@ -59,10 +76,11 @@ export default class EventsTable extends Component<IEventTableProps ,IEventsTabl
             <tbody>
               {
                 this.props.items.map((item, index)=>{
-                  const {tag, date, details, type} = {...item};
+                  const {tag, date, details, type, utime} = {...item};
                   const {comment} = {...this.parseDetails(details)}//{initialValue, comment, todo}
+                  const classes = this.setClasses(utime);
                   return (
-                    <tr key={index} className='tr-shadow-on'>
+                    <tr key={utime} className={classes}>
                       <td align="left">{this.getFormatedDateTime(date)}</td>
                       <td className='center '><Markers type={type}/></td>
                       <td width="100%" align="left">{comment}</td>
