@@ -44,7 +44,7 @@ export default class EventsTable extends Component<IEventTableProps ,IEventsTabl
     this.items = [...this.props.items];
   }
 
-  private isNew(value: number): boolean { //utime
+  private isNew(value: number): boolean {
     return this.items.every((item)=>item.utime !== value)
   }
 

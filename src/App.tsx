@@ -8,7 +8,6 @@ import EventTablePage from './event-table/Pages/Events/event-table-page';
 
 /*TODO в EventTablePage обнаружен баг сортировки времени*/
 /*TODO в DateCardsContainer сделать сортировку и фильтрацию по Датам*/
-/*TODO в DateCardsContainer сделать отображение больших списков через окно (да-да! рендер больших списков!) */
 /*TODO в EventTablePage и DateCardsContainer
   При возврате со страницы EventTablePage, надо попадать на туже страницу DateCardsContainer
   с которой пришёл, без загрузки карт заново (тут через state-management и кэширование)*/
