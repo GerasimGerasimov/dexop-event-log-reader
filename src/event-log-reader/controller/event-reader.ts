@@ -1,8 +1,8 @@
 import { TEventItems } from "../../event-models/events";
+import { url_event_log_reader } from "../../event-table/event-urls";
 
-const event_log_reader = 'http://localhost:5008/';
-const event_log_reader_dates = `${event_log_reader}v1/dates/`;
-const event_log_reader_events = `${event_log_reader}v1/events/`;
+const event_log_reader_dates = `${url_event_log_reader}v1/dates/`;
+const event_log_reader_events = `${url_event_log_reader}v1/events/`;
 
 export class TEventReader {
   

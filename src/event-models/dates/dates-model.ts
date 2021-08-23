@@ -1,9 +1,7 @@
 import { EventReader } from "../../event-log-reader/controller/event-reader";
+import { url_event_logger_service } from "../../event-table/event-urls";
 import { waitForUnErrorExecution } from "../../utils";
 import { WSInformer } from "../ws/client";
-
-/**TODO найти способ убрать хард-код */
-const url = 'ws://localhost:5007' 
 
 export interface IDateEventsCounters {
   events_counts_cash: Map<string, number>;
@@ -27,7 +25,7 @@ export class TDates {
   }
 
   public init() {
-    WSInformer.init(url, this.onDBIsChangedAtNow.bind(this))
+    WSInformer.init(url_event_logger_service, this.onDBIsChangedAtNow.bind(this))
     this.waitForServiceRespond();
   }
 
