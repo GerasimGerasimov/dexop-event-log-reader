@@ -88,7 +88,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
     this.setState ({
         respond: {...this.Model.getItems(DefaultQuery)}
     })
-     this.getData();
+    this.getData();
   }
 
   componentWillUnmount() {

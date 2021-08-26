@@ -27,7 +27,7 @@ export class TDates {
   }
 
   public init() {
-    WSInformer.init(url_event_logger_service, this.onDBIsChangedAtNow.bind(this))
+    WSInformer.init(url_event_logger_service, this.onDBIsChangedAtNow.bind(this));
     this.waitForServiceRespond();
   }
 

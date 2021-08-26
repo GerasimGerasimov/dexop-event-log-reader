@@ -8,6 +8,17 @@ export class WSInformer {
     public static init(host: string, handler: Function){
         this.wss = new WSControl(host, this.checkIncomingMessage.bind(this));
         this.onIncomingMessage = handler;
+        this.wss.OpenConnectionCallBack = this.onOpenConnection.bind(this);
+        this.wss.CloseConnectionCallBack = this.onCloseConnection.bind(this);
+    }
+
+    private static onOpenConnection() {
+      console.log('this.wss.OpenConnectionCallBack = this.onOpenConnection.bind(this);')
+      this.wss.IncomingMessageCallBack = this.checkIncomingMessage.bind(this);
+    }
+
+    private static onCloseConnection() {
+      console.log('this.wss.CloseConnectionCallBack = this.onCloseConnection.bind(this);')
     }
 
     public static checkIncomingMessage(msg: any) {

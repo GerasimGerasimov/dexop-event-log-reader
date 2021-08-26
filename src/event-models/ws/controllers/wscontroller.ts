@@ -8,6 +8,8 @@ export default class WSControl {
     private ws:WebSocket;
 
     private onIncomingMessage: handler;
+    private onOpenConnection:  handler = ()=>{};
+    private onCloseConnection:  handler = ()=>{};
 
     constructor (host: string, handler: handler){
         this.host = host;
@@ -16,24 +18,21 @@ export default class WSControl {
         this.initSocket();
     }
 
-    public async send(payload: any){
-        await this.waitForConnect();
-        await this.waitBufferRelease();
-        this.ws.send(JSON.stringify(payload));
+    public set IncomingMessageCallBack(func: handler) {
+        this.onIncomingMessage = func;
     }
 
-    private async waitForConnect(): Promise<string> {
-        return new Promise((resolve, reject) => {
-            if (this.ws.readyState === WebSocket.OPEN) return resolve('Connected!');
-            console.log('waitForConnect...');
-            const Timer = setInterval( ()=>{
-                if (this.ws.readyState === WebSocket.OPEN) { 
-                    clearInterval(Timer);
-                    console.log('Connected!');
-                    return resolve('Connected!');
-                }
-            }, 100);
-        })
+    public set OpenConnectionCallBack(func: handler) {
+        this.onOpenConnection = func;
+    }
+
+    public set CloseConnectionCallBack(func: handler) {
+        this.onCloseConnection = func;
+    }
+
+    public async send(payload: any){
+        await this.waitBufferRelease();
+        this.ws.send(JSON.stringify(payload));
     }
 
     private async waitBufferRelease(): Promise<any> {
@@ -69,6 +68,7 @@ export default class WSControl {
 
     private onOpen(event: any) {
         console.log(`Opened connection to ${this.host}`);
+        this.onOpenConnection({});
     }    
 
     private onError(event: any) {
@@ -77,10 +77,13 @@ export default class WSControl {
 
     private onClose(event: any) {
         console.log(`Closed connection to ${this.host}`);
-        setTimeout(() => {
+        this.onOpenConnection({});
+        setTimeout(async () => {
             console.log(`Try connect to ${this.host}`);
+            this.ws = null!;
+            this.ws = new WebSocket(this.host);
             this.initSocket();
-        }, 1000);        
+        }, 1000);
     }
 
     private onMessage(msg: any) {
