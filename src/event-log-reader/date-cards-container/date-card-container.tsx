@@ -13,6 +13,8 @@ interface IDateCardsContainerProps {
 
 interface IDateCardsContainerState {
   cards: Array<string>;
+  tryCount: number,
+  LoadError: string;
   isLoaded: boolean;
   query: IDatesQuery;
   respond: IDatesRespond;
@@ -42,6 +44,8 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
     this.state = {
       cards:[],
       filterEnable: false,
+      tryCount: 0,
+      LoadError: '',
       isLoaded: false,
       showModal: false,
       query: {...DefaultQuery}, 
@@ -61,9 +65,17 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
     this.getData();
   }
 
-  private onLoaded(datas: any) {
+  private onLoaded() {
     console.log('onLoaded');
     this.getData();
+  }
+
+  private onLoadError(arg:{count: number, error: string}) {
+    console.log('onLoadError');
+    this.setState ({
+      tryCount: arg.count,
+      LoadError: arg.error 
+    })
   }
 
   componentDidMount() {
@@ -72,6 +84,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
     this.Model = new TDatesQuery(ModelDates);
     ModelDates.dataLoadedCallBack = this.onLoaded.bind(this);
     this.Model.onDataAddedCallBack = this.onDataAddedToDataBaseHandler.bind(this);
+    ModelDates.dataLoadErrorCallBack = this.onLoadError.bind(this);
     this.setState ({
         respond: {...this.Model.getItems(DefaultQuery)}
     })
@@ -147,6 +160,22 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
       return (
       <EventCard date={item} key={item} />)
     })
+    
+    const waitForLoad = () => {
+      return (
+        <div>
+          <span className="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+          {(this.state.LoadError === '')
+           ? null
+           : ( <div>
+                <p>{`Try Count: ${this.state.tryCount}`}</p>
+                <p>{`Error: ${this.state.LoadError}`}</p>
+              </div>
+           )
+          }
+        </div>
+      )
+    }
 
     return (
       <div className='flex-column'>
@@ -159,7 +188,7 @@ export default class DateCardsContainer extends Component <IDateCardsContainerPr
           <div className="overflow-auto h-100 b1dg">
             {this.state.isLoaded
               ? <ul className="list-group">{items}</ul>
-              : <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              : waitForLoad()
             }
           </div>
         </div>
