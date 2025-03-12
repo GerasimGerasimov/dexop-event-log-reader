@@ -136,7 +136,7 @@ export class TDates {
     console.log(`Try to load Dates List: ${this.LoadTryCount++}`)
     try {
       return await EventReader.getDates() as Array<string>;
-    } catch (e) {
+    } catch (e: any) {
       throw new Error(`Error: event-reader not respond: ${e.message}`);
     }
   }

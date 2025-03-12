@@ -22,7 +22,7 @@ export class TEventReader {
         return await fetch(event_log_reader_dates, header)
             .then (this.handledHTTPResponse)
             .then (this.validationJSON);
-      } catch(e) {
+      } catch(e: any) {
         throw new Error (`Fetch Error: ${e.message}`);
       }
   }
@@ -40,7 +40,7 @@ export class TEventReader {
       return await fetch(url, header)
           .then (this.handledHTTPResponse)
           .then (this.validationJSON);
-    } catch(e) {
+    } catch(e: any) {
       throw new Error (`Fetch Error: ${e.message}`);
     }
   }

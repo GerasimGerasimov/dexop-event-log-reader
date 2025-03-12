@@ -29,7 +29,7 @@ export class WSInformer {
     public static async sendCmdToServer(request: ICmdToServer):Promise<any | IErrorMessage> {
       try {
         await this.wss.send(request)
-      } catch (e) {
+      } catch (e: any) {
         return ErrorMessage (`Fetch Error: ${e.message}`);
       }
     }

@@ -14,7 +14,7 @@ export async function * asyncGenerator <T> (func: (value?:T) => Promise<void | T
       const respond = await func();
       yield {count, respond, error:''};
       break;
-    } catch (e) {
+    } catch (e: any) {
       yield {count, respond: undefined, error: e.message};
     }
   }
@@ -43,7 +43,7 @@ export async function * asyncValidGenerator <T> (func: (value?:T) => Promise<voi
         yield {count, respond:result.dates, error:''};
         break;
       }
-    } catch (e) {
+    } catch (e: any) {
       yield {count, respond: undefined, error: e.message};
     }
   }
